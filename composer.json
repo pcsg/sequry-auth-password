@@ -1,0 +1,28 @@
+{
+    "name" : "pcsg/gpmauthpassword",
+    "type" : "quiqqer-module",
+    "description" : "Authentification Plugin via Password",
+    "version" : "dev-master",
+
+    "authors" : [{
+        "name": "Patrick Müller",
+        "email": "p.mueller@pcsg.de",
+        "homepage": "http://www.pcsg.de",
+        "role": "Developer"
+    }],
+
+    "support" : {
+        "email" : "support@pcsg.de"
+    },
+
+    "require": {
+        "quiqqer/quiqqer" : "*@dev",
+        "quiqqer/grouppasswordmanager": "dev-master"
+    },
+
+    "autoload": {
+        "psr-0" : {
+            "Pcsg" : "src/"
+        }
+    }
+}
