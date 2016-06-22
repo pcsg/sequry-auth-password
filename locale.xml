@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locales>
+
+    <groups name="pcsg/gpmauthpassword" datatype="php">
+
+        <locale name="exception.user.already.registered">
+            <de><![CDATA[Der Benutzer ist bereits mit dem Authentifizierungs-Plugin registriert.]]></de>
+        </locale>
+        <locale name="exception.derive.key.user.not.authenticated">
+            <de><![CDATA[Der Benutzer muss sich zuerst bei diesem Plugin authentifizieren, um einen Schlüssel ableiten zu können.]]></de>
+        </locale>
+        <locale name="exception.user.not.registered">
+            <de><![CDATA[Der Benutzer muss sich zuerst bei diesem Plugin registrieren, um sich authentifizieren zu können.]]></de>
+        </locale>
+        <locale name="exception.registration.with.quiqqer.password.only">
+            <de><![CDATA[Die Registrierung bei diesem Authentifizierungs-Plugin ist nur mit dem QUIQQER Login-Passwort möglich.]]></de>
+        </locale>
+        <locale name="exception.user.authentication.data.wrong">
+            <de><![CDATA[Die Authentifizierungsinformationen sind nicht korrekt.]]></de>
+        </locale>
+
+    </groups>
+
+    <groups name="pcsg/gpmauthpassword" datatype="php,js">
+
+    </groups>
+
+    <groups name="pcsg/gpmauthpassword" datatype="js">
+
+        <!-- Control: Authentication -->
+        <locale name="authentication.password.label">
+            <de><![CDATA[QUIQQER Login Passwort]]></de>
+        </locale>
+
+    </groups>
+
+</locales>

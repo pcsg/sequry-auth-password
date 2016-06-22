@@ -1,0 +1,9 @@
+.gpm-auth-password-title {
+    float: left;
+    margin-bottom: 5px;
+    width: 100%
+}
+
+.gpm-auth-password-input {
+    float: left;
+}
