@@ -56,7 +56,7 @@ define('package/pcsg/gpmauthpassword/bin/controls/Authentication', [
                 'html',
                 '<label>' +
                 '<span class="gpm-auth-password-title">' +
-                    QUILocale.get(lg, 'authentication.password.label') +
+                QUILocale.get(lg, 'authentication.password.label') +
                 '</span>' +
                 '<input type="password" class="gpm-auth-password-input"/>' +
                 '</label>'
@@ -69,7 +69,19 @@ define('package/pcsg/gpmauthpassword/bin/controls/Authentication', [
          * event : on inject
          */
         $onInject: function () {
-            // @todo
+            var self  = this;
+            var Input = this.$Elm.getElement('.gpm-auth-password-input');
+
+            Input.addEvents({
+                keydown: function (event) {
+                    if (typeof event !== 'undefined' &&
+                        event.code === 13) {
+                        self.fireEvent('submit');
+                    }
+                }
+            });
+
+            Input.focus();
         },
 
         /**

@@ -71,20 +71,22 @@ class AuthPlugin implements iAuthPlugin
     public function authenticate($information = null)
     {
         if (!self::isRegistered($this->User)) {
+            // @todo eigenen 401 error code
             throw new QUI\Exception(array(
                 'pcsg/gpmauthpassword',
                 'exception.user.not.registered'
-            ), 401);
+            ));
         }
 
         $QUIAuth = new QUIAuth($this->User->getUsername());
         $auth    = $QUIAuth->auth($information);
 
         if (!$auth) {
+            // @todo eigenen 401 error code
             throw new QUI\Exception(array(
                 'pcsg/gpmauthpassword',
                 'exception.user.authentication.data.wrong'
-            ), 401);
+            ));
         }
 
         $this->authInformation = $information;
