@@ -26,6 +26,13 @@ class AuthPlugin implements iAuthPlugin
     const TBL  = 'pcsg_gpm_auth_password';
 
     /**
+     * Flag for user password change
+     *
+     * @var bool
+     */
+    public static $passwordChange = false;
+
+    /**
      * Current Plugin User
      *
      * @var QUI\Users\User
@@ -130,6 +137,53 @@ class AuthPlugin implements iAuthPlugin
     public function getAuthenticationControl()
     {
         return 'package/pcsg/gpmauthpassword/bin/controls/Authentication';
+    }
+
+    /**
+     * Change authentication information
+     *
+     * @param mixed $old - current authentication information
+     * @param mixed $new - new authentication information
+     *
+     * @return void
+     * @throws QUI\Exception
+     */
+    public function changeAuthenticationInformation($old, $new)
+    {
+        if (!$this::isRegistered()) {
+            throw new QUI\Exception(array(
+                'pcsg/gpmauthpassword',
+                'exception.change.auth.user.not.registered'
+            ));
+        }
+
+        // check old authentication information
+        $QUIAuth = new QUIAuth($this->User->getUsername());
+        $auth    = $QUIAuth->auth($old);
+
+        if (!$auth) {
+            throw new QUI\Exception(array(
+                'pcsg/gpmauthpassword',
+                'exception.change.auth.old.information.wrong'
+            ));
+        }
+
+        // check new authentication information
+        $new = trim($new);
+
+        if (empty($new)) {
+            throw new QUI\Exception(array(
+                'pcsg/gpmauthpassword',
+                'exception.change.auth.new.information.empty'
+            ));
+        }
+
+        // set new user password
+        self::$passwordChange = true;
+        $this->User->setPassword($new);
+        self::$passwordChange = false;
+
+        $this->authInformation = $new;
     }
 
     /**
@@ -246,6 +300,16 @@ class AuthPlugin implements iAuthPlugin
     }
 
     /**
+     * Returns a QUI\Control object that collects registration information
+     *
+     * @return \QUI\Control
+     */
+    public function getRegistrationControl()
+    {
+        return 'package/pcsg/gpmauthpassword/bin/controls/Registration';
+    }
+
+    /**
      * Registers the auth plugin with the main password manager module
      *
      * @return void
@@ -257,5 +321,15 @@ class AuthPlugin implements iAuthPlugin
             self::NAME,
             'Password authentication via QUIQQER Login password'
         );
+    }
+
+    /**
+     * Returns a QUI\Control object that allows changing of authentication information
+     *
+     * @return \QUI\Control
+     */
+    public function getChangeAuthenticationControl()
+    {
+        return 'package/pcsg/gpmauthpassword/bin/controls/ChangeAuth';
     }
 }

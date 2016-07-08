@@ -3,6 +3,7 @@
 
     <groups name="pcsg/gpmauthpassword" datatype="php">
 
+        <!-- Class: AuthPlugin -->
         <locale name="exception.user.already.registered">
             <de><![CDATA[Der Benutzer ist bereits mit dem Authentifizierungs-Plugin registriert.]]></de>
         </locale>
@@ -18,6 +19,20 @@
         <locale name="exception.user.authentication.data.wrong">
             <de><![CDATA[Die Authentifizierungsinformationen sind nicht korrekt.]]></de>
         </locale>
+        <locale name="exception.change.auth.user.not.registered">
+            <de><![CDATA[Der Benutzer muss sich zuerst bei diesem Plugin registrieren.]]></de>
+        </locale>
+        <locale name="exception.change.auth.old.information.wrong">
+            <de><![CDATA[Die alten Authentifizierunginformationen sind nicht korrekt.]]></de>
+        </locale>
+        <locale name="exception.change.auth.new.information.empty">
+            <de><![CDATA[Die neuen Authentifizierungsinformationen sind leer.]]></de>
+        </locale>
+
+        <!-- Class: Events -->
+        <locale name="exception.set.password.only.via.plugin">
+            <de><![CDATA[Das Passwort des Benutzers <b>[userName]</b> (#[userId]) kann nicht über das Standard QUIQQER-Interface geändert werden, da das Modul <b>gpmauthpassword</b> installiert ist und der Benutzer für dieses Plugin registriert ist. Das Passwort kann ausschließlich über das Authentifizierungs-Interface des Passwort-Managers geändert werden.]]></de>
+        </locale>
 
     </groups>
 
@@ -30,6 +45,23 @@
         <!-- Control: Authentication -->
         <locale name="authentication.password.label">
             <de><![CDATA[QUIQQER Login Passwort]]></de>
+        </locale>
+
+        <!-- Control: ChangeAuth -->
+        <locale name="changeauth.password.label.original">
+            <de><![CDATA[Bisheriges QUIQQER Login-Passwort]]></de>
+        </locale>
+        <locale name="changeauth.password.label.new">
+            <de><![CDATA[Neues QUIQQER Login-Passwort]]></de>
+        </locale>
+        <locale name="changeauth.password.label.repeat">
+            <de><![CDATA[Passwort wiederholen]]></de>
+        </locale>
+        <locale name="changeauth.fill.inputs">
+            <de><![CDATA[Bitte füllen Sie alle Felder aus.]]></de>
+        </locale>
+        <locale name="changeauth.password.mismatch">
+            <de><![CDATA[Die beiden Angaben für das neue Passwort stimmen nicht überein.]]></de>
         </locale>
 
     </groups>

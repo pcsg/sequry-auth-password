@@ -1,21 +1,21 @@
 /**
  * Control for creating a new password
  *
- * @module package/pcsg/gpmauthpassword/bin/controls/Authentication
+ * @module package/pcsg/gpmauthpassword/bin/controls/Registration
  * @author www.pcsg.de (Patrick Müller)
  *
  * @require qui/controls/Control
  * @require Locale
- * @require css!package/pcsg/gpmauthpassword/bin/controls/Authentication.css
+ * @require css!package/pcsg/gpmauthpassword/bin/controls/Registration.css
  *
  * @event onSubmit
  */
-define('package/pcsg/gpmauthpassword/bin/controls/Authentication', [
+define('package/pcsg/gpmauthpassword/bin/controls/Registration', [
 
     'qui/controls/Control',
     'Locale',
 
-    'css!package/pcsg/gpmauthpassword/bin/controls/Authentication.css'
+    'css!package/pcsg/gpmauthpassword/bin/controls/Registration.css'
 
 ], function (QUIControl, QUILocale) {
     "use strict";
@@ -25,7 +25,7 @@ define('package/pcsg/gpmauthpassword/bin/controls/Authentication', [
     return new Class({
 
         Extends: QUIControl,
-        Type   : 'package/pcsg/gpmauthpassword/bin/controls/Authentication',
+        Type   : 'package/pcsg/gpmauthpassword/bin/controls/Registration',
 
         Binds: [
             '$onInject',
@@ -87,7 +87,7 @@ define('package/pcsg/gpmauthpassword/bin/controls/Authentication', [
          *
          * @return {string}
          */
-        getAuthData: function () {
+        getRegistrationData: function () {
             return this.$Elm.getElement('.gpm-auth-password-input').value;
         }
     });
