@@ -121,6 +121,15 @@ define('package/pcsg/gpmauthpassword/bin/controls/ChangeAuth', [
          * Submit data
          */
         submit: function () {
+            this.fireEvent('submit');
+        },
+
+        /**
+         * Checks if all necessary form fields are filled
+         *
+         * @return {boolean}
+         */
+        check: function() {
             if (this.$InputOriginal.value.trim() === '' ||
                 this.$InputNew.value.trim() === '' ||
                 this.$InputRepeat.value.trim() === '') {
@@ -130,7 +139,7 @@ define('package/pcsg/gpmauthpassword/bin/controls/ChangeAuth', [
                     );
                 });
 
-                return;
+                return false;
             }
 
             if (this.$InputNew.value !== this.$InputRepeat.value) {
@@ -140,10 +149,10 @@ define('package/pcsg/gpmauthpassword/bin/controls/ChangeAuth', [
                     );
                 });
 
-                return;
+                return false;
             }
 
-            this.fireEvent('submit');
+            return true;
         },
 
         /**
