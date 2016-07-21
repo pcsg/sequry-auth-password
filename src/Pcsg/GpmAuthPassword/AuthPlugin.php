@@ -33,51 +33,37 @@ class AuthPlugin implements iAuthPlugin
     public static $passwordChange = false;
 
     /**
-     * Current Plugin User
+     * The authentication information for different users
      *
-     * @var QUI\Users\User
+     * @var array
      */
-    protected $User = null;
-
-    /**
-     * The authentication information
-     *
-     * @var string
-     */
-    protected $authInformation = null;
-
-    /**
-     * @param \QUI\Users\User $User (optional) - The User this plugin should authenticate; if ommitted User = session user
-     */
-    public function __construct($User = null)
-    {
-        if (!is_null($User)) {
-            $this->User = $User;
-        } else {
-            $this->User = QUI::getUserBySession();
-        }
-    }
+    protected static $authInformation = array();
 
     /**
      * Return internal name of auth plugin
      *
      * @return String
      */
-    public function getName()
+    public static function getName()
     {
-        return $this::NAME;
+        return self::NAME;
     }
 
     /**
-     * Authenticate the current user
+     * Authenticate a user with this plugin
      *
+     * @param \QUI\Users\User $User (optional) - if omitted, use current session user
      * @param mixed $information
      * @return true - if authenticated
      * @throws QUI\Exception
      */
-    public function authenticate($information = null)
+    public static function authenticate($User = null, $information = null)
     {
-        if (!self::isRegistered($this->User)) {
+        if (is_null($User)) {
+            $User = QUI::getUserBySession();
+        }
+
+        if (!self::isRegistered($User)) {
             // @todo eigenen 401 error code
             throw new QUI\Exception(array(
                 'pcsg/gpmauthpassword',
@@ -85,7 +71,7 @@ class AuthPlugin implements iAuthPlugin
             ));
         }
 
-        $QUIAuth = new QUIAuth($this->User->getUsername());
+        $QUIAuth = new QUIAuth($User->getUsername());
         $auth    = $QUIAuth->auth($information);
 
         if (!$auth) {
@@ -96,45 +82,55 @@ class AuthPlugin implements iAuthPlugin
             ));
         }
 
-        $this->authInformation = $information;
+        self::$authInformation[$User->getId()] = $information;
 
         return true;
     }
 
     /**
-     * Checks if the current user is successfully authenticated for this runtime
+     * Checks if a user is successfully authenticated for this runtime
      *
+     * @param \QUI\Users\User $User (optional) - if omitted, use current session user
      * @return bool
      */
-    public function isAuthenticated()
+    public static function isAuthenticated($User = null)
     {
-        return !is_null($this->authInformation);
+        if (is_null($User)) {
+            $User = QUI::getUserBySession();
+        }
+
+        return isset(self::$authInformation[$User->getId()]);
     }
 
     /**
-     * Get the derived key from the authentication information
+     * Get the derived key from the authentication information of a specific user
      *
+     * @param \QUI\Users\User $User (optional) - if omitted, use current session user
      * @return Key
      * @throws QUI\Exception
      */
-    public function getDerivedKey()
+    public static function getDerivedKey($User = null)
     {
-        if (!$this->isAuthenticated()) {
+        if (is_null($User)) {
+            $User = QUI::getUserBySession();
+        }
+
+        if (!self::isAuthenticated($User)) {
             throw new QUI\Exception(array(
                 'pcsg/gpmauthpassword',
                 'exception.derive.key.user.not.authenticated'
             ));
         }
 
-        return KDF::createKey($this->authInformation, $this->getSalt());
+        return KDF::createKey(self::$authInformation[$User->getId()], self::getSalt($User));
     }
 
     /**
-     * Returns a QUI\Control object that collects authentification information
+     * Returns URL QUI\Control that collects authentification information
      *
-     * @return \QUI\Control
+     * @return string - \QUI\Control URL
      */
-    public function getAuthenticationControl()
+    public static function getAuthenticationControl()
     {
         return 'package/pcsg/gpmauthpassword/bin/controls/Authentication';
     }
@@ -144,13 +140,18 @@ class AuthPlugin implements iAuthPlugin
      *
      * @param mixed $old - current authentication information
      * @param mixed $new - new authentication information
+     * @param \QUI\Users\User $User (optional) - if omitted, use current session user
      *
      * @return void
      * @throws QUI\Exception
      */
-    public function changeAuthenticationInformation($old, $new)
+    public static function changeAuthenticationInformation($old, $new, $User = null)
     {
-        if (!$this::isRegistered()) {
+        if (is_null($User)) {
+            $User = QUI::getUserBySession();
+        }
+
+        if (!self::isRegistered($User)) {
             throw new QUI\Exception(array(
                 'pcsg/gpmauthpassword',
                 'exception.change.auth.user.not.registered'
@@ -158,7 +159,7 @@ class AuthPlugin implements iAuthPlugin
         }
 
         // check old authentication information
-        $QUIAuth = new QUIAuth($this->User->getUsername());
+        $QUIAuth = new QUIAuth($User->getUsername());
         $auth    = $QUIAuth->auth($old);
 
         if (!$auth) {
@@ -180,24 +181,29 @@ class AuthPlugin implements iAuthPlugin
 
         // set new user password
         self::$passwordChange = true;
-        $this->User->setPassword($new);
+        $User->setPassword($new);
         self::$passwordChange = false;
 
-        $this->authInformation = $new;
+        self::$authInformation[$User->getId()] = $new;
     }
 
     /**
      * Get the salt used for key derivation
      *
+     * @param \QUI\Users\User $User (optional) - if omitted, use current session user
      * @return string
      */
-    protected function getSalt()
+    protected static function getSalt($User = null)
     {
+        if (is_null($User)) {
+            $User = QUI::getUserBySession();
+        }
+
         $result = QUI::getDataBase()->fetch(array(
             'select' => array('salt'),
             'from'   => self::TBL,
             'where'  => array(
-                'userId' => $this->User->getId()
+                'userId' => $User->getId()
             )
         ));
 
@@ -208,7 +214,7 @@ class AuthPlugin implements iAuthPlugin
     }
 
     /**
-     * Registers the current user and creates a new keypair
+     * Registers a user with this plugin
      *
      * @param \QUI\Users\User $User (optional) - if omitted, use current session user
      * @param mixed $information - authentication information given by the user
@@ -300,11 +306,11 @@ class AuthPlugin implements iAuthPlugin
     }
 
     /**
-     * Returns a QUI\Control object that collects registration information
+     * Returns URL of QUI\Control that collects registration information
      *
-     * @return \QUI\Control
+     * @return string - \QUI\Control URL
      */
-    public function getRegistrationControl()
+    public static function getRegistrationControl()
     {
         return 'package/pcsg/gpmauthpassword/bin/controls/Registration';
     }
@@ -324,11 +330,11 @@ class AuthPlugin implements iAuthPlugin
     }
 
     /**
-     * Returns a QUI\Control object that allows changing of authentication information
+     * Returns URL of QUI\Control that allows changing of authentication information
      *
-     * @return \QUI\Control
+     * @return string - \QUI\Control URL
      */
-    public function getChangeAuthenticationControl()
+    public static function getChangeAuthenticationControl()
     {
         return 'package/pcsg/gpmauthpassword/bin/controls/ChangeAuth';
     }
