@@ -52,12 +52,12 @@ class AuthPlugin implements iAuthPlugin
     /**
      * Authenticate a user with this plugin
      *
-     * @param \QUI\Users\User $User (optional) - if omitted, use current session user
      * @param mixed $information
+     * @param \QUI\Users\User $User (optional) - if omitted, use current session user
      * @return true - if authenticated
      * @throws QUI\Exception
      */
-    public static function authenticate($User = null, $information = null)
+    public static function authenticate($information, $User = null)
     {
         if (is_null($User)) {
             $User = QUI::getUserBySession();
@@ -216,12 +216,13 @@ class AuthPlugin implements iAuthPlugin
     /**
      * Registers a user with this plugin
      *
-     * @param \QUI\Users\User $User (optional) - if omitted, use current session user
      * @param mixed $information - authentication information given by the user
+     * @param \QUI\Users\User $User (optional) - if omitted, use current session user
      * @return bool - success
+     *
      * @throws QUI\Exception
      */
-    public static function register($User = null, $information = null)
+    public static function register($information, $User = null)
     {
         if (is_null($User)) {
             $User = QUI::getUserBySession();
