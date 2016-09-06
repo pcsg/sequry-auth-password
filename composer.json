@@ -1,7 +1,7 @@
 {
     "name" : "pcsg/gpmauthpassword",
     "type" : "quiqqer-module",
-    "description" : "Authentification Plugin via Password",
+    "description" : "Authentification Plugin via QUIQQER Login Password",
     "version" : "dev-master",
 
     "authors" : [{
