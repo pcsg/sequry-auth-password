@@ -6,11 +6,12 @@
 
 namespace Pcsg\GpmAuthPassword;
 
+use Pcsg\GroupPasswordManager\Actors\CryptoUser;
 use Pcsg\GroupPasswordManager\Security\KDF;
 use Pcsg\GroupPasswordManager\Security\Keys\Key;
 use Pcsg\GroupPasswordManager\Security\Random;
 use QUI;
-use Pcsg\GroupPasswordManager\Security\Interfaces\iAuthPlugin;
+use Pcsg\GroupPasswordManager\Security\Interfaces\IAuthPlugin;
 use Pcsg\GroupPasswordManager\Security\Handler\Authentication;
 use QUI\Users\Auth as QUIAuth;
 
@@ -20,7 +21,7 @@ use QUI\Users\Auth as QUIAuth;
  * @package pcsg/gpmauthpassword
  * @author www.pcsg.de (Patrick Müller)
  */
-class AuthPlugin implements iAuthPlugin
+class AuthPlugin implements IAuthPlugin
 {
     const NAME = 'Password Authentification';
     const TBL  = 'pcsg_gpm_auth_password';
@@ -216,9 +217,9 @@ class AuthPlugin implements iAuthPlugin
     /**
      * Registers a user with this plugin
      *
-     * @param mixed $information - authentication information given by the user
+     * @param mixed $information - registration information given by the user
      * @param \QUI\Users\User $User (optional) - if omitted, use current session user
-     * @return bool - success
+     * @return string - authentication information
      *
      * @throws QUI\Exception
      */
@@ -254,6 +255,8 @@ class AuthPlugin implements iAuthPlugin
                 'salt'   => $randSalt
             )
         );
+
+        return $information;
     }
 
     /**
@@ -338,5 +341,21 @@ class AuthPlugin implements iAuthPlugin
     public static function getChangeAuthenticationControl()
     {
         return 'package/pcsg/gpmauthpassword/bin/controls/ChangeAuth';
+    }
+
+    /**
+     * Delete a user from this plugin
+     *
+     * @param CryptoUser $CryptoUser
+     * @return mixed
+     */
+    public static function deleteUser($CryptoUser)
+    {
+        QUI::getDataBase()->delete(
+            self::TBL,
+            array(
+                'userId' => $CryptoUser->getId()
+            )
+        );
     }
 }
