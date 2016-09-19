@@ -30,8 +30,14 @@
         </locale>
 
         <!-- Class: Events -->
-        <locale name="exception.set.password.only.via.plugin">
-            <de><![CDATA[Das Passwort des Benutzers <b>[userName]</b> (#[userId]) kann nicht über das Standard QUIQQER-Interface geändert werden, da das Modul <b>gpmauthpassword</b> installiert ist und der Benutzer für dieses Plugin registriert ist. Das Passwort kann ausschließlich über das Authentifizierungs-Interface des Passwort-Managers geändert werden.]]></de>
+        <locale name="exception.set.password.only.via.plugin" html="true">
+            <de><![CDATA[Das Passwort des Benutzers <b>[userName]</b> (#[userId]) kann nicht über die Standard QUIQQER-Benutzerverwaltung geändert werden, da das Modul <b>gpmauthpassword</b> installiert ist und der Benutzer für dieses Plugin registriert ist. Das Passwort kann ausschließlich über das Authentifizierungs-Interface des Passwort-Managers geändert werden.]]></de>
+        </locale>
+        <locale name="exception.event.userchangepassword">
+            <de><![CDATA[Das Passwort des Benutzers [userName] (#[userId]) konnte nicht geändert werden, da das Modul "pcsg/gpmauthpassword" einen unerwarteten Fehler geworfen hat. Bitte wenden Sie sich an einen Administrator.]]></de>
+        </locale>
+        <locale name="attention.event.userchangepassword">
+            <de><![CDATA[Das Passwort des Benutzers [userName] (#[userId]) wurde erfolgreich geändert und kann nun auch im Rahmen des Passwort-Managers verwendet werden.]]></de>
         </locale>
 
     </groups>

@@ -34,6 +34,14 @@ class AuthPlugin implements IAuthPlugin
     public static $passwordChange = false;
 
     /**
+     * Flag: If this flag is set to true, a call of changeAuthenticationInformation()
+     * will also change the quiqqer user password.
+     *
+     * @var bool [default: false]
+     */
+    public static $changePasswordEvent = false;
+
+    /**
      * The authentication information for different users
      *
      * @var array
@@ -60,6 +68,11 @@ class AuthPlugin implements IAuthPlugin
      */
     public static function authenticate($information, $User = null)
     {
+        if (self::$changePasswordEvent) {
+            self::$authInformation[$User->getId()] = $information;
+            return true;
+        }
+
         if (is_null($User)) {
             $User = QUI::getUserBySession();
         }
@@ -157,6 +170,11 @@ class AuthPlugin implements IAuthPlugin
                 'pcsg/gpmauthpassword',
                 'exception.change.auth.user.not.registered'
             ));
+        }
+
+        if (self::$changePasswordEvent) {
+            self::$authInformation[$User->getId()] = $new;
+            return;
         }
 
         // check old authentication information

@@ -3,5 +3,6 @@
 
     <event on="onPcsgGpmLoadAuthPlugins" fire="\Pcsg\GpmAuthPassword\AuthPlugin::registerPlugin" />
     <event on="onUserSetPassword" fire="\Pcsg\GpmAuthPassword\Events::onUserSetPassword" />
+    <event on="onUserChangePasswordBefore" fire="\Pcsg\GpmAuthPassword\Events::onUserChangePasswordBefore" />
 
 </events>
