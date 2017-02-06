@@ -13,7 +13,7 @@ use Pcsg\GroupPasswordManager\Security\Random;
 use QUI;
 use Pcsg\GroupPasswordManager\Security\Interfaces\IAuthPlugin;
 use Pcsg\GroupPasswordManager\Security\Handler\Authentication;
-use QUI\Users\Auth as QUIAuth;
+use QUI\Users\Auth\QUIQQER as QUIAuth;
 
 /**
  * Class Events
@@ -85,10 +85,7 @@ class AuthPlugin implements IAuthPlugin
             ));
         }
 
-        $QUIAuth = new QUIAuth($User->getUsername());
-        $auth    = $QUIAuth->auth($information);
-
-        if (!$auth) {
+        if (!self::checkQuiqqerPassword($User, $information)) {
             // @todo eigenen 401 error code
             throw new QUI\Exception(array(
                 'pcsg/gpmauthpassword',
@@ -178,10 +175,7 @@ class AuthPlugin implements IAuthPlugin
         }
 
         // check old authentication information
-        $QUIAuth = new QUIAuth($User->getUsername());
-        $auth    = $QUIAuth->auth($old);
-
-        if (!$auth) {
+        if (!self::checkQuiqqerPassword($User, $old)) {
             throw new QUI\Exception(array(
                 'pcsg/gpmauthpassword',
                 'exception.change.auth.old.information.wrong'
@@ -254,10 +248,7 @@ class AuthPlugin implements IAuthPlugin
             ));
         }
 
-        $QUIAuth = new QUIAuth($User->getUsername());
-        $auth    = $QUIAuth->auth($information);
-
-        if (!$auth) {
+        if (!self::checkQuiqqerPassword($User, $information)) {
             throw new QUI\Exception(array(
                 'pcsg/gpmauthpassword',
                 'exception.registration.with.quiqqer.password.only'
@@ -375,5 +366,25 @@ class AuthPlugin implements IAuthPlugin
                 'userId' => $CryptoUser->getId()
             )
         );
+    }
+
+    /**
+     * Checks if a quiqqer login password is correct
+     *
+     * @param QUI\Users\User $User
+     * @param string $password - login password
+     *
+     * @return bool
+     */
+    protected static function checkQuiqqerPassword($User, $password) {
+        $QUIAuth = new QUIAuth($User->getName());
+
+        try {
+            $QUIAuth->auth($password);
+        } catch (QUI\Users\Exception $Exception) {
+            return false;
+        }
+
+        return true;
     }
 }
