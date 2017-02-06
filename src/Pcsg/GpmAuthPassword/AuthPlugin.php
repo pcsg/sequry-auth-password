@@ -376,7 +376,8 @@ class AuthPlugin implements IAuthPlugin
      *
      * @return bool
      */
-    protected static function checkQuiqqerPassword($User, $password) {
+    protected static function checkQuiqqerPassword($User, $password)
+    {
         $QUIAuth = new QUIAuth($User->getName());
 
         try {
