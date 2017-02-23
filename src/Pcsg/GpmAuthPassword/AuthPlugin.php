@@ -77,6 +77,10 @@ class AuthPlugin implements IAuthPlugin
             $User = QUI::getUserBySession();
         }
 
+        if (self::isAuthenticated($User)) {
+            return true;
+        }
+
         if (!self::isRegistered($User)) {
             // @todo eigenen 401 error code
             throw new QUI\Exception(array(
