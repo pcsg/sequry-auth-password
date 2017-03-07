@@ -23,7 +23,7 @@ use QUI\Users\Auth\QUIQQER as QUIAuth;
  */
 class AuthPlugin implements IAuthPlugin
 {
-    const NAME = 'Password Authentification';
+    const NAME = 'QUIQQER Login-Passwort';
     const TBL  = 'pcsg_gpm_auth_password';
 
     /**
@@ -342,7 +342,7 @@ class AuthPlugin implements IAuthPlugin
         Authentication::registerPlugin(
             self::class,
             self::NAME,
-            'Password authentication via QUIQQER Login password'
+            'Authentifizierung mit dem QUIQQER Login-Passwort'
         );
     }
 
@@ -382,7 +382,7 @@ class AuthPlugin implements IAuthPlugin
      */
     protected static function checkQuiqqerPassword($User, $password)
     {
-        $QUIAuth = new QUIAuth($User->getName());
+        $QUIAuth = new QUIAuth($User->getUsername());
 
         try {
             $QUIAuth->auth($password);
