@@ -14,6 +14,7 @@ use QUI;
 use Pcsg\GroupPasswordManager\Security\Interfaces\IAuthPlugin;
 use Pcsg\GroupPasswordManager\Security\Handler\Authentication;
 use QUI\Users\Auth\QUIQQER as QUIAuth;
+use Pcsg\GroupPasswordManager\Security\HiddenString;
 
 /**
  * Class Events
@@ -61,12 +62,12 @@ class AuthPlugin implements IAuthPlugin
     /**
      * Authenticate a user with this plugin
      *
-     * @param mixed $information
+     * @param HiddenString $information
      * @param \QUI\Users\User $User (optional) - if omitted, use current session user
      * @return true - if authenticated
      * @throws QUI\Exception
      */
-    public static function authenticate($information, $User = null)
+    public static function authenticate(HiddenString $information, $User = null)
     {
         if (self::$changePasswordEvent) {
             self::$authInformation[$User->getId()] = $information;
@@ -153,14 +154,14 @@ class AuthPlugin implements IAuthPlugin
     /**
      * Change authentication information
      *
-     * @param mixed $old - current authentication information
-     * @param mixed $new - new authentication information
+     * @param HiddenString $old - current authentication information
+     * @param HiddenString $new - new authentication information
      * @param \QUI\Users\User $User (optional) - if omitted, use current session user
      *
      * @return void
      * @throws QUI\Exception
      */
-    public static function changeAuthenticationInformation($old, $new, $User = null)
+    public static function changeAuthenticationInformation(HiddenString $old, HiddenString $new, $User = null)
     {
         if (is_null($User)) {
             $User = QUI::getUserBySession();
@@ -233,13 +234,13 @@ class AuthPlugin implements IAuthPlugin
     /**
      * Registers a user with this plugin
      *
-     * @param mixed $information - registration information given by the user
+     * @param HiddenString $information - registration information given by the user
      * @param \QUI\Users\User $User (optional) - if omitted, use current session user
-     * @return string - authentication information
+     * @return HiddenString - authentication information
      *
      * @throws QUI\Exception
      */
-    public static function register($information, $User = null)
+    public static function register(HiddenString $information, $User = null)
     {
         if (is_null($User)) {
             $User = QUI::getUserBySession();
@@ -376,17 +377,17 @@ class AuthPlugin implements IAuthPlugin
      * Checks if a quiqqer login password is correct
      *
      * @param QUI\Users\User $User
-     * @param string $password - login password
+     * @param HiddenString $password - login password
      *
      * @return bool
      */
-    protected static function checkQuiqqerPassword($User, $password)
+    protected static function checkQuiqqerPassword($User, HiddenString $password)
     {
         $QUIAuth = new QUIAuth($User->getUsername());
 
         try {
-            $QUIAuth->auth($password);
-        } catch (QUI\Users\Exception $Exception) {
+            $QUIAuth->auth($password->getString());
+        } catch (\Exception $Exception) {
             return false;
         }
 
