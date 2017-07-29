@@ -43,7 +43,7 @@ define('package/pcsg/gpmauthpassword/bin/controls/Authentication', [
 
             this.parent();
 
-            this.$Input.type        = 'text';
+            this.$Input.type        = 'password';
             this.$Input.placeholder = QUILocale.get(lg, 'authentication.password.label');
 
             this.$Input.addEvents({

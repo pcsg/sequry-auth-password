@@ -45,7 +45,7 @@ class AuthPlugin implements IAuthPlugin
     /**
      * The authentication information for different users
      *
-     * @var array
+     * @var HiddenString[]
      */
     protected static $authInformation = array();
 
@@ -138,7 +138,10 @@ class AuthPlugin implements IAuthPlugin
             ));
         }
 
-        return KDF::createKey(self::$authInformation[$User->getId()], self::getSalt($User));
+        return KDF::createKey(
+            self::$authInformation[$User->getId()],
+            self::getSalt($User)
+        );
     }
 
     /**
