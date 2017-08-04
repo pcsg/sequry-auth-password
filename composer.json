@@ -2,7 +2,7 @@
     "name": "pcsg\/gpmauthpassword",
     "type": "quiqqer-module",
     "description": "Authentification Plugin via QUIQQER Login Password",
-    "version": "hiddenstring",
+    "version": "dev-dev",
     "authors": [
         {
             "name": "Patrick M\u00fcller",
