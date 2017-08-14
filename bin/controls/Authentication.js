@@ -78,6 +78,20 @@ define('package/pcsg/gpmauthpassword/bin/controls/Authentication', [
         },
 
         /**
+         * Show the element for authentication data input
+         */
+        show: function () {
+            this.$Input.setStyle('display', '');
+        },
+
+        /**
+         * Hide the element for authentication data input
+         */
+        hide: function () {
+            this.$Input.setStyle('display', 'none');
+        },
+
+        /**
          * Return authentication information
          *
          * @return {string}
