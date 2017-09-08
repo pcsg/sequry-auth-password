@@ -50,13 +50,29 @@ class AuthPlugin implements IAuthPlugin
     protected static $authInformation = array();
 
     /**
-     * Return internal name of auth plugin
+     * Return locale data for auth plugin name
      *
-     * @return String
+     * @return array
      */
-    public static function getName()
+    public static function getNameLocaleData()
     {
-        return self::NAME;
+        return array(
+            'pcsg/gpmauthpassword',
+            'plugin.name'
+        );
+    }
+
+    /**
+     * Return locale data for auth plugin description
+     *
+     * @return array
+     */
+    public static function getDescriptionLocaleData()
+    {
+        return array(
+            'pcsg/gpmauthpassword',
+            'plugin.description'
+        );
     }
 
     /**

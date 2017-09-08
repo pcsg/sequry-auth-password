@@ -5,7 +5,7 @@
 
         <!-- Class: AuthPlugin -->
         <locale name="exception.user.already.registered">
-            <de><![CDATA[Der Benutzer ist bereits mit dem Authentifizierungs-Plugin registriert.]]></de>
+            <de><![CDATA[Der Benutzer ist bereits mit dem Authentifizierungs-Faktor registriert.]]></de>
         </locale>
         <locale name="exception.derive.key.user.not.authenticated">
             <de><![CDATA[Der Benutzer muss sich zuerst bei diesem Plugin authentifizieren, um einen Schlüssel ableiten zu können.]]></de>
@@ -14,19 +14,19 @@
             <de><![CDATA[Der Benutzer muss sich zuerst bei diesem Plugin registrieren, um sich authentifizieren zu können.]]></de>
         </locale>
         <locale name="exception.registration.with.quiqqer.password.only">
-            <de><![CDATA[Die Registrierung bei diesem Authentifizierungs-Plugin ist nur mit dem QUIQQER Login-Passwort möglich.]]></de>
+            <de><![CDATA[Die Registrierung bei diesem Authentifizierungs-Faktor ist nur mit dem QUIQQER Login-Passwort möglich.]]></de>
         </locale>
         <locale name="exception.user.authentication.data.wrong">
-            <de><![CDATA[Die Authentifizierungsinformationen sind nicht korrekt.]]></de>
+            <de><![CDATA[Die Zugangsdaten sind nicht korrekt.]]></de>
         </locale>
         <locale name="exception.change.auth.user.not.registered">
             <de><![CDATA[Der Benutzer muss sich zuerst bei diesem Plugin registrieren.]]></de>
         </locale>
         <locale name="exception.change.auth.old.information.wrong">
-            <de><![CDATA[Die alten Authentifizierunginformationen sind nicht korrekt.]]></de>
+            <de><![CDATA[Die alten Zugangsdaten sind nicht korrekt.]]></de>
         </locale>
         <locale name="exception.change.auth.new.information.empty">
-            <de><![CDATA[Die neuen Authentifizierungsinformationen sind leer.]]></de>
+            <de><![CDATA[Die neuen Zugangsdaten sind leer.]]></de>
         </locale>
 
         <!-- Class: Events -->
@@ -43,6 +43,13 @@
     </groups>
 
     <groups name="pcsg/gpmauthpassword" datatype="php,js">
+
+        <locale name="plugin.name">
+            <de><![CDATA[QUIQQER Login-Passwort]]></de>
+        </locale>
+        <locale name="plugin.description">
+            <de><![CDATA[Authentifizierung mit dem QUIQQER Login-Passwort]]></de>
+        </locale>
 
     </groups>
 
