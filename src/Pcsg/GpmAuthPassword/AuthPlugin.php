@@ -359,11 +359,7 @@ class AuthPlugin implements IAuthPlugin
      */
     public static function registerPlugin()
     {
-        Authentication::registerPlugin(
-            self::class,
-            self::NAME,
-            'Authentifizierung mit dem QUIQQER Login-Passwort'
-        );
+        Authentication::registerPlugin(new self());
     }
 
     /**
