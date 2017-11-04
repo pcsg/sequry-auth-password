@@ -154,6 +154,8 @@ class AuthPlugin implements IAuthPlugin
             ));
         }
 
+        \QUI\System\Log::writeRecursive(self::$authInformation);
+
         return KDF::createKey(
             self::$authInformation[$User->getId()],
             self::getSalt($User)
@@ -207,7 +209,7 @@ class AuthPlugin implements IAuthPlugin
         }
 
         // check new authentication information
-        $new = trim($new);
+        $new = new HiddenString(trim($new));
 
         if (empty($new)) {
             throw new QUI\Exception(array(

@@ -9,6 +9,7 @@ namespace Pcsg\GpmAuthPassword;
 use Pcsg\GroupPasswordManager\Constants\Tables;
 use Pcsg\GroupPasswordManager\Security\Authentication\Plugin;
 use Pcsg\GroupPasswordManager\Security\Handler\Authentication;
+use Pcsg\GroupPasswordManager\Security\HiddenString;
 use QUI;
 
 /**
@@ -76,8 +77,8 @@ class Events
 
             $AuthPlugin = Authentication::getAuthPlugin($result[0]['id']);
             $AuthPlugin->changeAuthenticationInformation(
-                $oldPass,
-                $newPass,
+                new HiddenString($oldPass),
+                new HiddenString($newPass),
                 $User
             );
         } catch (\Exception $Exception) {
