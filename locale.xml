@@ -61,20 +61,14 @@
         </locale>
 
         <!-- Control: ChangeAuth -->
-        <locale name="changeauth.password.label.original">
-            <de><![CDATA[Bisheriges QUIQQER Login-Passwort]]></de>
-        </locale>
-        <locale name="changeauth.password.label.new">
+        <locale name="controls.changeauth.template.labelPassword">
             <de><![CDATA[Neues QUIQQER Login-Passwort]]></de>
         </locale>
-        <locale name="changeauth.password.label.repeat">
+        <locale name="controls.changeauth.template.labelPasswordCheck">
             <de><![CDATA[Passwort wiederholen]]></de>
         </locale>
-        <locale name="changeauth.fill.inputs">
-            <de><![CDATA[Bitte füllen Sie alle Felder aus.]]></de>
-        </locale>
-        <locale name="changeauth.password.mismatch">
-            <de><![CDATA[Die beiden Angaben für das neue Passwort stimmen nicht überein.]]></de>
+        <locale name="controls.changeauth.password_mismatch">
+            <de><![CDATA[Die Passwörter stimmen nicht überein.]]></de>
         </locale>
 
     </groups>
