@@ -28,9 +28,12 @@ define('package/pcsg/gpmauthpassword/bin/controls/ChangeAuth', [
 
         Binds: [
             '$onInject',
-            'getOldAuthData',
-            'getNewAuthData',
-            'submit'
+            '$check',
+            'getAuthData',
+            'submit',
+            'focus',
+            'enable',
+            'disable'
         ],
 
         initialize: function (options) {
@@ -46,13 +49,10 @@ define('package/pcsg/gpmauthpassword/bin/controls/ChangeAuth', [
         },
 
         /**
-         * Event: onImport
+         * Event: onInject
          */
-        $onImport: function () {
-            var self = this;
-
-            this.parent();
-
+        $onInject: function () {
+            var self     = this;
             var lgPrefix = 'controls.changeauth.template.';
 
             var Content = new Element('div', {
@@ -61,7 +61,7 @@ define('package/pcsg/gpmauthpassword/bin/controls/ChangeAuth', [
                     labelPassword     : QUILocale.get(lg, lgPrefix + 'labelPassword'),
                     labelPasswordCheck: QUILocale.get(lg, lgPrefix + 'labelPasswordCheck')
                 })
-            }).inject(this.$Input, 'after');
+            }).inject(this.$Elm);
 
             this.$PasswordInput      = Content.getElement('.pcsg-gpm-auth-password-change-input');
             this.$PasswordCheckInput = Content.getElement('.pcsg-gpm-auth-password-change-input-check');
@@ -74,13 +74,11 @@ define('package/pcsg/gpmauthpassword/bin/controls/ChangeAuth', [
             };
 
             this.$PasswordInput.addEvents({
-                keydown: OnKeyDown,
-                blur   : this.$check
+                keydown: OnKeyDown
             });
 
             this.$PasswordCheckInput.addEvents({
-                keydown: OnKeyDown,
-                blur   : this.$check
+                keydown: OnKeyDown
             });
 
             this.$MsgElm = Content.getElement('.pcsg-gpm-auth-password-change-msg');
