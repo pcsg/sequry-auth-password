@@ -4,7 +4,7 @@
  * @module package/pcsg/gpmauthpassword/bin/controls/ChangeAuth
  * @author www.pcsg.de (Patrick Müller)
  *
- * @event onSubmit
+ * @event onSubmit [authData, this]
  */
 define('package/pcsg/gpmauthpassword/bin/controls/ChangeAuth', [
 
