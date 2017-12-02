@@ -9,6 +9,7 @@ namespace Pcsg\GpmAuthPassword;
 use Pcsg\GroupPasswordManager\Constants\Tables;
 use Pcsg\GroupPasswordManager\Security\Authentication\Plugin;
 use Pcsg\GroupPasswordManager\Security\Handler\Authentication;
+use Pcsg\GroupPasswordManager\Security\Handler\Recovery;
 use Pcsg\GroupPasswordManager\Security\HiddenString;
 use QUI;
 
@@ -75,10 +76,12 @@ class Events
         try {
             AuthPlugin::$changePasswordEvent = true;
 
+            $newPass = new HiddenString($newPass);
+
             $AuthPlugin = Authentication::getAuthPlugin($result[0]['id']);
             $AuthPlugin->changeAuthenticationInformation(
                 new HiddenString($oldPass),
-                new HiddenString($newPass),
+                $newPass,
                 $User
             );
         } catch (\Exception $Exception) {
@@ -96,6 +99,13 @@ class Events
                 )
             ));
         }
+
+        QUI::getAjax()->triggerGlobalJavaScriptCallback(
+            'showRecoveryCode',
+            array(
+                'recoveryCode' => Recovery::createEntry($AuthPlugin, $newPass)
+            )
+        );
 
         QUI::getMessagesHandler()->addAttention(
             QUI::getLocale()->get(

@@ -154,8 +154,6 @@ class AuthPlugin implements IAuthPlugin
             ));
         }
 
-        \QUI\System\Log::writeRecursive(self::$authInformation);
-
         return KDF::createKey(
             self::$authInformation[$User->getId()],
             self::getSalt($User)
