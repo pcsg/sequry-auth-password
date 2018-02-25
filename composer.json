@@ -21,7 +21,7 @@
 
     "autoload": {
         "psr-0" : {
-            "Sequry" : "src/"
+            "Sequry\\Auth\\" : "src/Sequry/"
         }
     }
 }

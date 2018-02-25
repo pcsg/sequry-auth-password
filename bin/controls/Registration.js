@@ -1,31 +1,31 @@
 /**
  * Control for creating a new password
  *
- * @module package/pcsg/gpmauthpassword/bin/controls/Registration
+ * @module package/sequry/auth-password/bin/controls/Registration
  * @author www.pcsg.de (Patrick Müller)
  *
  * @require qui/controls/Control
  * @require Locale
- * @require css!package/pcsg/gpmauthpassword/bin/controls/Registration.css
+ * @require css!package/sequry/auth-password/bin/controls/Registration.css
  *
  * @event onSubmit
  */
-define('package/pcsg/gpmauthpassword/bin/controls/Registration', [
+define('package/sequry/auth-password/bin/controls/Registration', [
 
     'qui/controls/Control',
     'Locale',
 
-    'css!package/pcsg/gpmauthpassword/bin/controls/Registration.css'
+    'css!package/sequry/auth-password/bin/controls/Registration.css'
 
 ], function (QUIControl, QUILocale) {
     "use strict";
 
-    var lg = 'pcsg/gpmauthpassword';
+    var lg = 'sequry/auth-password';
 
     return new Class({
 
         Extends: QUIControl,
-        Type   : 'package/pcsg/gpmauthpassword/bin/controls/Registration',
+        Type   : 'package/sequry/auth-password/bin/controls/Registration',
 
         Binds: [
             '$onInject',

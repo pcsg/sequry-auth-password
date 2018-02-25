@@ -1,31 +1,31 @@
 /**
- * Authentication control for pcsg/gpmauthpassword
+ * Authentication control for sequry/auth-password
  *
- * @module package/pcsg/gpmauthpassword/bin/controls/Authentication
+ * @module package/sequry/auth-password/bin/controls/Authentication
  * @author www.pcsg.de (Patrick Müller)
  *
  * @require package/pcsg/grouppasswordmanager/bin/controls/authPlugins/Authentication
  * @require Locale
- * @require css!package/pcsg/gpmauthpassword/bin/controls/Authentication.css
+ * @require css!package/sequry/auth-password/bin/controls/Authentication.css
  *
  * @event onSubmit
  */
-define('package/pcsg/gpmauthpassword/bin/controls/Authentication', [
+define('package/sequry/auth-password/bin/controls/Authentication', [
 
     'package/pcsg/grouppasswordmanager/bin/controls/authPlugins/Authentication',
     'Locale',
 
-    'css!package/pcsg/gpmauthpassword/bin/controls/Authentication.css'
+    'css!package/sequry/auth-password/bin/controls/Authentication.css'
 
 ], function (AuthenticationBaseClass, QUILocale) {
     "use strict";
 
-    var lg = 'pcsg/gpmauthpassword';
+    var lg = 'sequry/auth-password';
 
     return new Class({
 
         Extends: AuthenticationBaseClass,
-        Type   : 'package/pcsg/gpmauthpassword/bin/controls/Authentication',
+        Type   : 'package/sequry/auth-password/bin/controls/Authentication',
 
         Binds: [
             '$onImport',

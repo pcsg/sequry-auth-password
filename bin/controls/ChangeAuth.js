@@ -1,30 +1,30 @@
 /**
  * Control for collecting authentication data
  *
- * @module package/pcsg/gpmauthpassword/bin/controls/ChangeAuth
+ * @module package/sequry/auth-password/bin/controls/ChangeAuth
  * @author www.pcsg.de (Patrick Müller)
  *
  * @event onSubmit [authData, this]
  */
-define('package/pcsg/gpmauthpassword/bin/controls/ChangeAuth', [
+define('package/sequry/auth-password/bin/controls/ChangeAuth', [
 
     'package/pcsg/grouppasswordmanager/bin/controls/authPlugins/ChangeAuth',
 
     'Locale',
     'Mustache',
 
-    'text!package/pcsg/gpmauthpassword/bin/controls/ChangeAuth.html',
-    'css!package/pcsg/gpmauthpassword/bin/controls/ChangeAuth.css'
+    'text!package/sequry/auth-password/bin/controls/ChangeAuth.html',
+    'css!package/sequry/auth-password/bin/controls/ChangeAuth.css'
 
 ], function (ChangeAuthBaseClass, QUILocale, Mustache, template) {
     "use strict";
 
-    var lg = 'pcsg/gpmauthpassword';
+    var lg = 'sequry/auth-password';
 
     return new Class({
 
         Extends: ChangeAuthBaseClass,
-        Type   : 'package/pcsg/gpmauthpassword/bin/controls/ChangeAuth',
+        Type   : 'package/sequry/auth-password/bin/controls/ChangeAuth',
 
         Binds: [
             '$onInject',

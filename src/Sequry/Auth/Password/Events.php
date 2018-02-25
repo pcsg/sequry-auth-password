@@ -1,22 +1,17 @@
 <?php
 
-/**
- * This file contains \Pcsg\GpmAuthPassword\Events
- */
+namespace Sequry\Auth\Password;
 
-namespace Pcsg\GpmAuthPassword;
-
-use Pcsg\GroupPasswordManager\Constants\Tables;
-use Pcsg\GroupPasswordManager\Security\Authentication\Plugin;
-use Pcsg\GroupPasswordManager\Security\Handler\Authentication;
-use Pcsg\GroupPasswordManager\Security\Handler\Recovery;
-use Pcsg\GroupPasswordManager\Security\HiddenString;
+use Sequry\Core\Constants\Tables;
+use Sequry\Core\Security\Handler\Authentication;
+use Sequry\Core\Security\Handler\Recovery;
+use Sequry\Core\Security\HiddenString;
 use QUI;
 
 /**
  * Class Events
  *
- * @package pcsg/gpmauthpassword
+ * @package sequry/auth-password
  * @author www.pcsg.de (Patrick Müller)
  */
 class Events
@@ -33,7 +28,7 @@ class Events
             && !AuthPlugin::$passwordChange
         ) {
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.set.password.only.via.plugin',
                 array(
                     'userName' => $User->getUsername(),
@@ -91,7 +86,7 @@ class Events
             );
 
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.event.userchangepassword',
                 array(
                     'userName' => $User->getUsername(),
@@ -109,7 +104,7 @@ class Events
 
         QUI::getMessagesHandler()->addAttention(
             QUI::getLocale()->get(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'attention.event.userchangepassword',
                 array(
                     'userName' => $User->getUsername(),

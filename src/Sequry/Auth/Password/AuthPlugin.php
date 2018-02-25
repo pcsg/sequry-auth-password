@@ -1,25 +1,21 @@
 <?php
 
-/**
- * This file contains \QUI\Kapitalschutz\Events
- */
+namespace Sequry\Auth\Password;
 
-namespace Pcsg\GpmAuthPassword;
-
-use Pcsg\GroupPasswordManager\Actors\CryptoUser;
-use Pcsg\GroupPasswordManager\Security\KDF;
-use Pcsg\GroupPasswordManager\Security\Keys\Key;
-use Pcsg\GroupPasswordManager\Security\Random;
+use Sequry\Core\Actors\CryptoUser;
+use Sequry\Core\Security\KDF;
+use Sequry\Core\Security\Keys\Key;
+use Sequry\Core\Security\Random;
 use QUI;
-use Pcsg\GroupPasswordManager\Security\Interfaces\IAuthPlugin;
-use Pcsg\GroupPasswordManager\Security\Handler\Authentication;
+use Sequry\Core\Security\Interfaces\IAuthPlugin;
+use Sequry\Core\Security\Handler\Authentication;
 use QUI\Users\Auth\QUIQQER as QUIAuth;
-use Pcsg\GroupPasswordManager\Security\HiddenString;
+use Sequry\Core\Security\HiddenString;
 
 /**
  * Class Events
  *
- * @package pcsg/gpmauthpassword
+ * @package sequry/auth-password
  * @author www.pcsg.de (Patrick Müller)
  */
 class AuthPlugin implements IAuthPlugin
@@ -57,7 +53,7 @@ class AuthPlugin implements IAuthPlugin
     public static function getNameLocaleData()
     {
         return array(
-            'pcsg/gpmauthpassword',
+            'sequry/auth-password',
             'plugin.name'
         );
     }
@@ -70,7 +66,7 @@ class AuthPlugin implements IAuthPlugin
     public static function getDescriptionLocaleData()
     {
         return array(
-            'pcsg/gpmauthpassword',
+            'sequry/auth-password',
             'plugin.description'
         );
     }
@@ -101,7 +97,7 @@ class AuthPlugin implements IAuthPlugin
         if (!self::isRegistered($User)) {
             // @todo eigenen 401 error code
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.user.not.registered'
             ));
         }
@@ -109,7 +105,7 @@ class AuthPlugin implements IAuthPlugin
         if (!self::checkQuiqqerPassword($User, $information)) {
             // @todo eigenen 401 error code
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.user.authentication.data.wrong'
             ));
         }
@@ -149,7 +145,7 @@ class AuthPlugin implements IAuthPlugin
 
         if (!self::isAuthenticated($User)) {
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.derive.key.user.not.authenticated'
             ));
         }
@@ -167,7 +163,7 @@ class AuthPlugin implements IAuthPlugin
      */
     public static function getAuthenticationControl()
     {
-        return 'package/pcsg/gpmauthpassword/bin/controls/Authentication';
+        return 'package/sequry/auth-password/bin/controls/Authentication';
     }
 
     /**
@@ -188,7 +184,7 @@ class AuthPlugin implements IAuthPlugin
 
         if (!self::isRegistered($User)) {
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.change.auth.user.not.registered'
             ));
         }
@@ -201,7 +197,7 @@ class AuthPlugin implements IAuthPlugin
         // check old authentication information
         if (!self::checkQuiqqerPassword($User, $old)) {
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.change.auth.old.information.wrong'
             ));
         }
@@ -211,7 +207,7 @@ class AuthPlugin implements IAuthPlugin
 
         if (empty($new)) {
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.change.auth.new.information.empty'
             ));
         }
@@ -267,14 +263,14 @@ class AuthPlugin implements IAuthPlugin
 
         if (self::isRegistered($User)) {
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.user.already.registered'
             ));
         }
 
         if (!self::checkQuiqqerPassword($User, $information)) {
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.registration.with.quiqqer.password.only'
             ));
         }
@@ -349,7 +345,7 @@ class AuthPlugin implements IAuthPlugin
      */
     public static function getRegistrationControl()
     {
-        return 'package/pcsg/gpmauthpassword/bin/controls/Registration';
+        return 'package/sequry/auth-password/bin/controls/Registration';
     }
 
     /**
@@ -369,7 +365,7 @@ class AuthPlugin implements IAuthPlugin
      */
     public static function getChangeAuthenticationControl()
     {
-        return 'package/pcsg/gpmauthpassword/bin/controls/ChangeAuth';
+        return 'package/sequry/auth-password/bin/controls/ChangeAuth';
     }
 
     /**

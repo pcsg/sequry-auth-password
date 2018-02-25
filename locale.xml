@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <locales>
 
-    <groups name="pcsg/gpmauthpassword" datatype="php">
+    <groups name="sequry/auth-password" datatype="php">
 
         <!-- Class: AuthPlugin -->
         <locale name="exception.user.already.registered">
@@ -34,7 +34,7 @@
             <de><![CDATA[Das Passwort des Benutzers <b>[userName]</b> (#[userId]) kann nicht über die Standard QUIQQER-Benutzerverwaltung geändert werden, da das Modul <b>gpmauthpassword</b> installiert ist und der Benutzer für dieses Plugin registriert ist. Das Passwort kann ausschließlich über das Authentifizierungs-Interface des Passwort-Managers geändert werden.]]></de>
         </locale>
         <locale name="exception.event.userchangepassword">
-            <de><![CDATA[Das Passwort des Benutzers [userName] (#[userId]) konnte nicht geändert werden, da das Modul "pcsg/gpmauthpassword" einen unerwarteten Fehler geworfen hat. Bitte wenden Sie sich an einen Administrator.]]></de>
+            <de><![CDATA[Das Passwort des Benutzers [userName] (#[userId]) konnte nicht geändert werden, da das Modul "sequry/auth-password" einen unerwarteten Fehler geworfen hat. Bitte wenden Sie sich an einen Administrator.]]></de>
         </locale>
         <locale name="attention.event.userchangepassword">
             <de><![CDATA[Das Passwort des Benutzers [userName] (#[userId]) wurde erfolgreich geändert und kann nun auch im Rahmen des Passwort-Managers verwendet werden.]]></de>
@@ -42,7 +42,7 @@
 
     </groups>
 
-    <groups name="pcsg/gpmauthpassword" datatype="php,js">
+    <groups name="sequry/auth-password" datatype="php,js">
 
         <locale name="plugin.name">
             <de><![CDATA[QUIQQER Login-Passwort]]></de>
@@ -53,7 +53,7 @@
 
     </groups>
 
-    <groups name="pcsg/gpmauthpassword" datatype="js">
+    <groups name="sequry/auth-password" datatype="js">
 
         <!-- Control: Authentication -->
         <locale name="authentication.password.label">
