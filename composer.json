@@ -1,7 +1,7 @@
 {
-    "name" : "pcsg/gpmauthpassword",
-    "type" : "quiqqer-module",
-    "description" : "Authentification Plugin via QUIQQER Login Password",
+    "name" : "sequry/auth-password",
+    "type" : "quiqqer-plugin",
+    "description" : "Sequry authentication with QUIQQER login password",
     "version" : "dev-master",
 
     "authors" : [{
@@ -16,13 +16,12 @@
     },
 
     "require": {
-        "quiqqer/quiqqer" : "*@dev",
-        "pcsg/grouppasswordmanager": "*@dev"
+        "sequry/core": ">=1.0|dev-master|dev-dev"
     },
 
     "autoload": {
         "psr-0" : {
-            "Pcsg" : "src/"
+            "Sequry" : "src/"
         }
     }
 }
