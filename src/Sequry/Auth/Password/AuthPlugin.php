@@ -13,15 +13,13 @@ use QUI\Users\Auth\QUIQQER as QUIAuth;
 use Sequry\Core\Security\HiddenString;
 
 /**
- * Class Events
+ * Class AuthPlugin
  *
- * @package sequry/auth-password
- * @author www.pcsg.de (Patrick Müller)
+ * Main plugin class
  */
 class AuthPlugin implements IAuthPlugin
 {
-    const NAME = 'QUIQQER Login-Passwort';
-    const TBL  = 'pcsg_gpm_auth_password';
+    const TBL = 'pcsg_gpm_auth_password';
 
     /**
      * Flag for user password change
@@ -328,7 +326,7 @@ class AuthPlugin implements IAuthPlugin
             'select' => array(
                 'userId'
             ),
-            'from'  => self::TBL
+            'from'   => self::TBL
         ));
 
         foreach ($result as $row) {

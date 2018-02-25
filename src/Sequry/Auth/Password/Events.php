@@ -11,8 +11,7 @@ use QUI;
 /**
  * Class Events
  *
- * @package sequry/auth-password
- * @author www.pcsg.de (Patrick Müller)
+ * sequry/auth-password events
  */
 class Events
 {
