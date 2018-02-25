@@ -1,26 +1,27 @@
 {
-    "name": "pcsg\/gpmauthpassword",
-    "type": "quiqqer-module",
-    "description": "Authentification Plugin via QUIQQER Login Password",
-    "version": "dev-dev",
-    "authors": [
-        {
-            "name": "Patrick M\u00fcller",
-            "email": "p.mueller@pcsg.de",
-            "homepage": "http:\/\/www.pcsg.de",
-            "role": "Developer"
-        }
-    ],
-    "support": {
-        "email": "support@pcsg.de"
+    "name" : "sequry/auth-password",
+    "type" : "quiqqer-plugin",
+    "description" : "Sequry authentication with QUIQQER login password",
+    "version" : "dev-dev",
+
+    "authors" : [{
+        "name": "Patrick Müller",
+        "email": "p.mueller@pcsg.de",
+        "homepage": "http://www.pcsg.de",
+        "role": "Developer"
+    }],
+
+    "support" : {
+        "email" : "support@pcsg.de"
     },
+
     "require": {
-        "quiqqer\/quiqqer": "*@dev",
-        "pcsg\/grouppasswordmanager": "*@dev"
+        "sequry/core": ">=1.0|dev-master|dev-dev"
     },
+
     "autoload": {
-        "psr-0": {
-            "Pcsg": "src\/"
+        "psr-0" : {
+            "Sequry" : "src/"
         }
     }
 }
