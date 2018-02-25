@@ -1,76 +1,50 @@
 /**
- * Control for creating a new password
+ * Authentication control for sequry/auth-password
  *
- * @module package/pcsg/gpmauthpassword/bin/controls/Authentication
+ * @module package/sequry/auth-password/bin/controls/Authentication
  * @author www.pcsg.de (Patrick Müller)
  *
- * @require qui/controls/Control
+ * @require package/pcsg/grouppasswordmanager/bin/controls/authPlugins/Authentication
  * @require Locale
- * @require css!package/pcsg/gpmauthpassword/bin/controls/Authentication.css
+ * @require css!package/sequry/auth-password/bin/controls/Authentication.css
  *
  * @event onSubmit
  */
-define('package/pcsg/gpmauthpassword/bin/controls/Authentication', [
+define('package/sequry/auth-password/bin/controls/Authentication', [
 
-    'qui/controls/Control',
+    'package/pcsg/grouppasswordmanager/bin/controls/authPlugins/Authentication',
     'Locale',
 
-    'css!package/pcsg/gpmauthpassword/bin/controls/Authentication.css'
+    'css!package/sequry/auth-password/bin/controls/Authentication.css'
 
-], function (QUIControl, QUILocale) {
+], function (AuthenticationBaseClass, QUILocale) {
     "use strict";
 
-    var lg = 'pcsg/gpmauthpassword';
+    var lg = 'sequry/auth-password';
 
     return new Class({
 
-        Extends: QUIControl,
-        Type   : 'package/pcsg/gpmauthpassword/bin/controls/Authentication',
+        Extends: AuthenticationBaseClass,
+        Type   : 'package/sequry/auth-password/bin/controls/Authentication',
 
         Binds: [
-            '$onInject',
+            '$onImport',
+            'focus',
+            'enable',
+            'disable',
             'getAuthData'
         ],
 
-        initialize: function (options) {
-            this.parent(options);
-
-            this.$Categories = null;
-            this.$Input      = null;
-
-            this.addEvents({
-                onInject: this.$onInject
-            });
-        },
-
         /**
-         * create the domnode element
-         *
-         * @return {HTMLDivElement}
+         * Event: onImport
          */
-        create: function () {
-            this.$Elm = this.parent();
-
-            this.$Elm.set(
-                'html',
-                '<label>' +
-                '<span class="gpm-auth-password-title">' +
-                QUILocale.get(lg, 'authentication.password.label') +
-                '</span>' +
-                '<input type="password" class="gpm-auth-password-input"/>' +
-                '</label>'
-            );
-
-            return this.$Elm;
-        },
-
-        /**
-         * event : on inject
-         */
-        $onInject: function () {
+        $onImport: function () {
             var self = this;
 
-            this.$Input = this.$Elm.getElement('.gpm-auth-password-input');
+            this.parent();
+
+            this.$Input.type        = 'password';
+            this.$Input.placeholder = QUILocale.get(lg, 'authentication.password.label');
 
             this.$Input.addEvents({
                 keydown: function (event) {
@@ -82,8 +56,39 @@ define('package/pcsg/gpmauthpassword/bin/controls/Authentication', [
             });
         },
 
+        /**
+         * Focus the element for authentication data input
+         */
         focus: function () {
             this.$Input.focus();
+        },
+
+        /**
+         * Enable the element for authentication data input
+         */
+        enable: function () {
+            this.$Input.disabled = false;
+        },
+
+        /**
+         * Disable the element for authentication data input
+         */
+        disable: function () {
+            this.$Input.disabled = true;
+        },
+
+        /**
+         * Show the element for authentication data input
+         */
+        show: function () {
+            this.$Input.setStyle('display', '');
+        },
+
+        /**
+         * Hide the element for authentication data input
+         */
+        hide: function () {
+            this.$Input.setStyle('display', 'none');
         },
 
         /**

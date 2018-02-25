@@ -1,30 +1,25 @@
 <?php
 
-/**
- * This file contains \QUI\Kapitalschutz\Events
- */
+namespace Sequry\Auth\Password;
 
-namespace Pcsg\GpmAuthPassword;
-
-use Pcsg\GroupPasswordManager\Actors\CryptoUser;
-use Pcsg\GroupPasswordManager\Security\KDF;
-use Pcsg\GroupPasswordManager\Security\Keys\Key;
-use Pcsg\GroupPasswordManager\Security\Random;
+use Sequry\Core\Actors\CryptoUser;
+use Sequry\Core\Security\KDF;
+use Sequry\Core\Security\Keys\Key;
+use Sequry\Core\Security\Random;
 use QUI;
-use Pcsg\GroupPasswordManager\Security\Interfaces\IAuthPlugin;
-use Pcsg\GroupPasswordManager\Security\Handler\Authentication;
+use Sequry\Core\Security\Interfaces\IAuthPlugin;
+use Sequry\Core\Security\Handler\Authentication;
 use QUI\Users\Auth\QUIQQER as QUIAuth;
+use Sequry\Core\Security\HiddenString;
 
 /**
- * Class Events
+ * Class AuthPlugin
  *
- * @package pcsg/gpmauthpassword
- * @author www.pcsg.de (Patrick Müller)
+ * Main plugin class
  */
 class AuthPlugin implements IAuthPlugin
 {
-    const NAME = 'QUIQQER Login-Passwort';
-    const TBL  = 'pcsg_gpm_auth_password';
+    const TBL = 'pcsg_gpm_auth_password';
 
     /**
      * Flag for user password change
@@ -44,29 +39,45 @@ class AuthPlugin implements IAuthPlugin
     /**
      * The authentication information for different users
      *
-     * @var array
+     * @var HiddenString[]
      */
     protected static $authInformation = array();
 
     /**
-     * Return internal name of auth plugin
+     * Return locale data for auth plugin name
      *
-     * @return String
+     * @return array
      */
-    public static function getName()
+    public static function getNameLocaleData()
     {
-        return self::NAME;
+        return array(
+            'sequry/auth-password',
+            'plugin.name'
+        );
+    }
+
+    /**
+     * Return locale data for auth plugin description
+     *
+     * @return array
+     */
+    public static function getDescriptionLocaleData()
+    {
+        return array(
+            'sequry/auth-password',
+            'plugin.description'
+        );
     }
 
     /**
      * Authenticate a user with this plugin
      *
-     * @param mixed $information
+     * @param HiddenString $information
      * @param \QUI\Users\User $User (optional) - if omitted, use current session user
      * @return true - if authenticated
      * @throws QUI\Exception
      */
-    public static function authenticate($information, $User = null)
+    public static function authenticate(HiddenString $information, $User = null)
     {
         if (self::$changePasswordEvent) {
             self::$authInformation[$User->getId()] = $information;
@@ -84,7 +95,7 @@ class AuthPlugin implements IAuthPlugin
         if (!self::isRegistered($User)) {
             // @todo eigenen 401 error code
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.user.not.registered'
             ));
         }
@@ -92,7 +103,7 @@ class AuthPlugin implements IAuthPlugin
         if (!self::checkQuiqqerPassword($User, $information)) {
             // @todo eigenen 401 error code
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.user.authentication.data.wrong'
             ));
         }
@@ -132,12 +143,15 @@ class AuthPlugin implements IAuthPlugin
 
         if (!self::isAuthenticated($User)) {
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.derive.key.user.not.authenticated'
             ));
         }
 
-        return KDF::createKey(self::$authInformation[$User->getId()], self::getSalt($User));
+        return KDF::createKey(
+            self::$authInformation[$User->getId()],
+            self::getSalt($User)
+        );
     }
 
     /**
@@ -147,20 +161,20 @@ class AuthPlugin implements IAuthPlugin
      */
     public static function getAuthenticationControl()
     {
-        return 'package/pcsg/gpmauthpassword/bin/controls/Authentication';
+        return 'package/sequry/auth-password/bin/controls/Authentication';
     }
 
     /**
      * Change authentication information
      *
-     * @param mixed $old - current authentication information
-     * @param mixed $new - new authentication information
+     * @param HiddenString $old - current authentication information
+     * @param HiddenString $new - new authentication information
      * @param \QUI\Users\User $User (optional) - if omitted, use current session user
      *
      * @return void
      * @throws QUI\Exception
      */
-    public static function changeAuthenticationInformation($old, $new, $User = null)
+    public static function changeAuthenticationInformation(HiddenString $old, HiddenString $new, $User = null)
     {
         if (is_null($User)) {
             $User = QUI::getUserBySession();
@@ -168,7 +182,7 @@ class AuthPlugin implements IAuthPlugin
 
         if (!self::isRegistered($User)) {
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.change.auth.user.not.registered'
             ));
         }
@@ -181,17 +195,17 @@ class AuthPlugin implements IAuthPlugin
         // check old authentication information
         if (!self::checkQuiqqerPassword($User, $old)) {
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.change.auth.old.information.wrong'
             ));
         }
 
         // check new authentication information
-        $new = trim($new);
+        $new = new HiddenString(trim($new));
 
         if (empty($new)) {
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.change.auth.new.information.empty'
             ));
         }
@@ -233,13 +247,13 @@ class AuthPlugin implements IAuthPlugin
     /**
      * Registers a user with this plugin
      *
-     * @param mixed $information - registration information given by the user
+     * @param HiddenString $information - registration information given by the user
      * @param \QUI\Users\User $User (optional) - if omitted, use current session user
-     * @return string - authentication information
+     * @return HiddenString - authentication information
      *
      * @throws QUI\Exception
      */
-    public static function register($information, $User = null)
+    public static function register(HiddenString $information, $User = null)
     {
         if (is_null($User)) {
             $User = QUI::getUserBySession();
@@ -247,14 +261,14 @@ class AuthPlugin implements IAuthPlugin
 
         if (self::isRegistered($User)) {
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.user.already.registered'
             ));
         }
 
         if (!self::checkQuiqqerPassword($User, $information)) {
             throw new QUI\Exception(array(
-                'pcsg/gpmauthpassword',
+                'sequry/auth-password',
                 'exception.registration.with.quiqqer.password.only'
             ));
         }
@@ -312,7 +326,7 @@ class AuthPlugin implements IAuthPlugin
             'select' => array(
                 'userId'
             ),
-            'from'  => self::TBL
+            'from'   => self::TBL
         ));
 
         foreach ($result as $row) {
@@ -329,7 +343,7 @@ class AuthPlugin implements IAuthPlugin
      */
     public static function getRegistrationControl()
     {
-        return 'package/pcsg/gpmauthpassword/bin/controls/Registration';
+        return 'package/sequry/auth-password/bin/controls/Registration';
     }
 
     /**
@@ -339,11 +353,7 @@ class AuthPlugin implements IAuthPlugin
      */
     public static function registerPlugin()
     {
-        Authentication::registerPlugin(
-            self::class,
-            self::NAME,
-            'Authentifizierung mit dem QUIQQER Login-Passwort'
-        );
+        Authentication::registerPlugin(new self());
     }
 
     /**
@@ -353,7 +363,7 @@ class AuthPlugin implements IAuthPlugin
      */
     public static function getChangeAuthenticationControl()
     {
-        return 'package/pcsg/gpmauthpassword/bin/controls/ChangeAuth';
+        return 'package/sequry/auth-password/bin/controls/ChangeAuth';
     }
 
     /**
@@ -376,17 +386,17 @@ class AuthPlugin implements IAuthPlugin
      * Checks if a quiqqer login password is correct
      *
      * @param QUI\Users\User $User
-     * @param string $password - login password
+     * @param HiddenString $password - login password
      *
      * @return bool
      */
-    protected static function checkQuiqqerPassword($User, $password)
+    protected static function checkQuiqqerPassword($User, HiddenString $password)
     {
         $QUIAuth = new QUIAuth($User->getUsername());
 
         try {
-            $QUIAuth->auth($password);
-        } catch (QUI\Users\Exception $Exception) {
+            $QUIAuth->auth($password->getString());
+        } catch (\Exception $Exception) {
             return false;
         }
 

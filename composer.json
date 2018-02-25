@@ -1,27 +1,25 @@
 {
-    "name" : "sequry/auth-password",
-    "type" : "quiqqer-plugin",
-    "description" : "Sequry authentication with QUIQQER login password",
-    "version" : "dev-master",
-
-    "authors" : [{
-        "name": "Patrick Müller",
-        "email": "p.mueller@pcsg.de",
-        "homepage": "http://www.pcsg.de",
-        "role": "Developer"
-    }],
-
-    "support" : {
-        "email" : "support@pcsg.de"
-    },
-
-    "require": {
-        "sequry/core": ">=1.0|dev-master|dev-dev"
-    },
-
-    "autoload": {
-        "psr-0" : {
-            "Sequry" : "src/"
-        }
+  "name": "sequry/auth-password",
+  "type": "quiqqer-plugin",
+  "description": "Sequry authentication with QUIQQER login password",
+  "version": "dev-master",
+  "authors": [
+    {
+      "name": "Patrick Müller",
+      "email": "p.mueller@pcsg.de",
+      "homepage": "http://www.pcsg.de",
+      "role": "Developer"
     }
+  ],
+  "support": {
+    "email": "support@pcsg.de"
+  },
+  "require": {
+    "sequry/core": ">=1.0|dev-master|dev-dev"
+  },
+  "autoload": {
+    "psr-0": {
+      "Sequry\\Auth\\": "src/Sequry/"
+    }
+  }
 }

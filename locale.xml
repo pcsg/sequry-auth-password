@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <locales>
 
-    <groups name="pcsg/gpmauthpassword" datatype="php">
+    <groups name="sequry/auth-password" datatype="php">
 
         <!-- Class: AuthPlugin -->
         <locale name="exception.user.already.registered">
-            <de><![CDATA[Der Benutzer ist bereits mit dem Authentifizierungs-Plugin registriert.]]></de>
+            <de><![CDATA[Der Benutzer ist bereits mit dem Authentifizierungs-Faktor registriert.]]></de>
         </locale>
         <locale name="exception.derive.key.user.not.authenticated">
             <de><![CDATA[Der Benutzer muss sich zuerst bei diesem Plugin authentifizieren, um einen Schlüssel ableiten zu können.]]></de>
@@ -14,19 +14,19 @@
             <de><![CDATA[Der Benutzer muss sich zuerst bei diesem Plugin registrieren, um sich authentifizieren zu können.]]></de>
         </locale>
         <locale name="exception.registration.with.quiqqer.password.only">
-            <de><![CDATA[Die Registrierung bei diesem Authentifizierungs-Plugin ist nur mit dem QUIQQER Login-Passwort möglich.]]></de>
+            <de><![CDATA[Die Registrierung bei diesem Authentifizierungs-Faktor ist nur mit dem QUIQQER Login-Passwort möglich.]]></de>
         </locale>
         <locale name="exception.user.authentication.data.wrong">
-            <de><![CDATA[Die Authentifizierungsinformationen sind nicht korrekt.]]></de>
+            <de><![CDATA[Die Zugangsdaten sind nicht korrekt.]]></de>
         </locale>
         <locale name="exception.change.auth.user.not.registered">
             <de><![CDATA[Der Benutzer muss sich zuerst bei diesem Plugin registrieren.]]></de>
         </locale>
         <locale name="exception.change.auth.old.information.wrong">
-            <de><![CDATA[Die alten Authentifizierunginformationen sind nicht korrekt.]]></de>
+            <de><![CDATA[Die alten Zugangsdaten sind nicht korrekt.]]></de>
         </locale>
         <locale name="exception.change.auth.new.information.empty">
-            <de><![CDATA[Die neuen Authentifizierungsinformationen sind leer.]]></de>
+            <de><![CDATA[Die neuen Zugangsdaten sind leer.]]></de>
         </locale>
 
         <!-- Class: Events -->
@@ -34,7 +34,7 @@
             <de><![CDATA[Das Passwort des Benutzers <b>[userName]</b> (#[userId]) kann nicht über die Standard QUIQQER-Benutzerverwaltung geändert werden, da das Modul <b>gpmauthpassword</b> installiert ist und der Benutzer für dieses Plugin registriert ist. Das Passwort kann ausschließlich über das Authentifizierungs-Interface des Passwort-Managers geändert werden.]]></de>
         </locale>
         <locale name="exception.event.userchangepassword">
-            <de><![CDATA[Das Passwort des Benutzers [userName] (#[userId]) konnte nicht geändert werden, da das Modul "pcsg/gpmauthpassword" einen unerwarteten Fehler geworfen hat. Bitte wenden Sie sich an einen Administrator.]]></de>
+            <de><![CDATA[Das Passwort des Benutzers [userName] (#[userId]) konnte nicht geändert werden, da das Modul "sequry/auth-password" einen unerwarteten Fehler geworfen hat. Bitte wenden Sie sich an einen Administrator.]]></de>
         </locale>
         <locale name="attention.event.userchangepassword">
             <de><![CDATA[Das Passwort des Benutzers [userName] (#[userId]) wurde erfolgreich geändert und kann nun auch im Rahmen des Passwort-Managers verwendet werden.]]></de>
@@ -42,11 +42,18 @@
 
     </groups>
 
-    <groups name="pcsg/gpmauthpassword" datatype="php,js">
+    <groups name="sequry/auth-password" datatype="php,js">
+
+        <locale name="plugin.name">
+            <de><![CDATA[QUIQQER Login-Passwort]]></de>
+        </locale>
+        <locale name="plugin.description">
+            <de><![CDATA[Authentifizierung mit dem QUIQQER Login-Passwort]]></de>
+        </locale>
 
     </groups>
 
-    <groups name="pcsg/gpmauthpassword" datatype="js">
+    <groups name="sequry/auth-password" datatype="js">
 
         <!-- Control: Authentication -->
         <locale name="authentication.password.label">
@@ -54,20 +61,14 @@
         </locale>
 
         <!-- Control: ChangeAuth -->
-        <locale name="changeauth.password.label.original">
-            <de><![CDATA[Bisheriges QUIQQER Login-Passwort]]></de>
-        </locale>
-        <locale name="changeauth.password.label.new">
+        <locale name="controls.changeauth.template.labelPassword">
             <de><![CDATA[Neues QUIQQER Login-Passwort]]></de>
         </locale>
-        <locale name="changeauth.password.label.repeat">
+        <locale name="controls.changeauth.template.labelPasswordCheck">
             <de><![CDATA[Passwort wiederholen]]></de>
         </locale>
-        <locale name="changeauth.fill.inputs">
-            <de><![CDATA[Bitte füllen Sie alle Felder aus.]]></de>
-        </locale>
-        <locale name="changeauth.password.mismatch">
-            <de><![CDATA[Die beiden Angaben für das neue Passwort stimmen nicht überein.]]></de>
+        <locale name="controls.changeauth.password_mismatch">
+            <de><![CDATA[Die Passwörter stimmen nicht überein.]]></de>
         </locale>
 
     </groups>

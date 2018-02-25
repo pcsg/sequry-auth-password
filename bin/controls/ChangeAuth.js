@@ -1,43 +1,47 @@
 /**
- * Control for registering a user with the gpmauthpassword plugin
+ * Control for collecting authentication data
  *
- * @module package/pcsg/gpmauthpassword/bin/controls/ChangeAuth
+ * @module package/sequry/auth-password/bin/controls/ChangeAuth
  * @author www.pcsg.de (Patrick Müller)
  *
- * @require qui/controls/Control
- * @require Locale
- * @require css!package/pcsg/gpmauthpassword/bin/controls/ChangeAuth.css
- *
- * @event onSubmit
+ * @event onSubmit [authData, this]
  */
-define('package/pcsg/gpmauthpassword/bin/controls/ChangeAuth', [
+define('package/sequry/auth-password/bin/controls/ChangeAuth', [
 
-    'qui/controls/Control',
+    'package/pcsg/grouppasswordmanager/bin/controls/authPlugins/ChangeAuth',
+
     'Locale',
+    'Mustache',
 
-    'css!package/pcsg/gpmauthpassword/bin/controls/ChangeAuth.css'
+    'text!package/sequry/auth-password/bin/controls/ChangeAuth.html',
+    'css!package/sequry/auth-password/bin/controls/ChangeAuth.css'
 
-], function (QUIControl, QUILocale) {
+], function (ChangeAuthBaseClass, QUILocale, Mustache, template) {
     "use strict";
 
-    var lg = 'pcsg/gpmauthpassword';
+    var lg = 'sequry/auth-password';
 
     return new Class({
 
-        Extends: QUIControl,
-        Type   : 'package/pcsg/gpmauthpassword/bin/controls/ChangeAuth',
+        Extends: ChangeAuthBaseClass,
+        Type   : 'package/sequry/auth-password/bin/controls/ChangeAuth',
 
         Binds: [
             '$onInject',
-            'getOldAuthData',
-            'getNewAuthData',
-            'submit'
+            '$check',
+            'getAuthData',
+            'submit',
+            'focus',
+            'enable',
+            'disable'
         ],
 
         initialize: function (options) {
             this.parent(options);
 
-            this.$Categories = null;
+            this.$PasswordInput      = null;
+            this.$PasswordCheckInput = null;
+            this.$MsgElm             = null;
 
             this.addEvents({
                 onInject: this.$onInject
@@ -45,132 +49,104 @@ define('package/pcsg/gpmauthpassword/bin/controls/ChangeAuth', [
         },
 
         /**
-         * create the domnode element
-         *
-         * @return {HTMLDivElement}
-         */
-        create: function () {
-            this.$Elm = this.parent();
-
-            this.$Elm.set(
-                'html',
-                '<label>' +
-                '<span class="gpm-auth-password-title">' +
-                QUILocale.get(lg, 'changeauth.password.label.original') +
-                '</span>' +
-                '<input type="password" class="gpm-auth-password-input-original"/>' +
-                '</label>' +
-                '<label>' +
-                '<span class="gpm-auth-password-title">' +
-                QUILocale.get(lg, 'changeauth.password.label.new') +
-                '</span>' +
-                '<input type="password" class="gpm-auth-password-input-new"/>' +
-                '</label>' +
-                '<label>' +
-                '<span class="gpm-auth-password-title">' +
-                QUILocale.get(lg, 'changeauth.password.label.repeat') +
-                '</span>' +
-                '<input type="password" class="gpm-auth-password-input-repeat"/>' +
-                '</label>'
-            );
-
-            return this.$Elm;
-        },
-
-        /**
-         * event : on inject
+         * Event: onInject
          */
         $onInject: function () {
-            var self            = this;
-            this.$InputOriginal = this.$Elm.getElement('.gpm-auth-password-input-original');
-            this.$InputNew      = this.$Elm.getElement('.gpm-auth-password-input-new');
-            this.$InputRepeat   = this.$Elm.getElement('.gpm-auth-password-input-repeat');
+            var self     = this;
+            var lgPrefix = 'controls.changeauth.template.';
 
-            this.$InputOriginal.addEvents({
-                keydown: function (event) {
-                    if (typeof event !== 'undefined' &&
-                        event.code === 13) {
-                        self.submit();
-                    }
+            var Content = new Element('div', {
+                'class': 'pcsg-gpm-auth-password-change',
+                html   : Mustache.render(template, {
+                    labelPassword     : QUILocale.get(lg, lgPrefix + 'labelPassword'),
+                    labelPasswordCheck: QUILocale.get(lg, lgPrefix + 'labelPasswordCheck')
+                })
+            }).inject(this.$Elm);
+
+            this.$PasswordInput      = Content.getElement('.pcsg-gpm-auth-password-change-input');
+            this.$PasswordCheckInput = Content.getElement('.pcsg-gpm-auth-password-change-input-check');
+
+            var OnKeyDown = function (event) {
+                if (typeof event !== 'undefined' &&
+                    event.code === 13) {
+                    self.submit();
                 }
+            };
+
+            this.$PasswordInput.addEvents({
+                keydown: OnKeyDown
             });
 
-            this.$InputNew.addEvents({
-                keydown: function (event) {
-                    if (typeof event !== 'undefined' &&
-                        event.code === 13) {
-                        self.submit();
-                    }
-                }
+            this.$PasswordCheckInput.addEvents({
+                keydown: OnKeyDown
             });
 
-
-            this.$InputRepeat.addEvents({
-                keydown: function (event) {
-                    if (typeof event !== 'undefined' &&
-                        event.code === 13) {
-                        self.submit();
-                    }
-                }
-            });
-
-            this.$InputOriginal.focus();
+            this.$MsgElm = Content.getElement('.pcsg-gpm-auth-password-change-msg');
         },
 
         /**
          * Submit data
          */
         submit: function () {
-            this.fireEvent('submit');
+            if (this.$check()) {
+                this.fireEvent('submit', [this.getAuthData(), this]);
+            }
         },
 
         /**
-         * Checks if all necessary form fields are filled
+         * Check if passwords are equal
          *
-         * @return {boolean}
+         * @returns {boolean}
          */
-        check: function() {
-            if (this.$InputOriginal.value.trim() === '' ||
-                this.$InputNew.value.trim() === '' ||
-                this.$InputRepeat.value.trim() === '') {
-                QUI.getMessageHandler(function (MH) {
-                    MH.addAttention(
-                        QUILocale.get(lg, 'changeauth.fill.inputs')
-                    );
-                });
+        $check: function () {
+            var pass      = this.$PasswordInput.value.trim();
+            var passCheck = this.$PasswordCheckInput.value.trim();
 
-                return false;
+            if (pass === passCheck) {
+                return true;
             }
 
-            if (this.$InputNew.value !== this.$InputRepeat.value) {
-                QUI.getMessageHandler(function (MH) {
-                    MH.addAttention(
-                        QUILocale.get(lg, 'changeauth.password.mismatch')
-                    );
-                });
+            this.$MsgElm.set(
+                'html',
+                QUILocale.get(
+                    lg,
+                    'controls.changeauth.password_mismatch'
+                )
+            );
 
-                return false;
-            }
-
-            return true;
+            return false;
         },
 
         /**
-         * Return old authentication information
+         * Focus the element for authentication data input
+         */
+        focus: function () {
+            this.$PasswordInput.focus();
+        },
+
+        /**
+         * Enable the element for authentication data input
+         */
+        enable: function () {
+            this.$PasswordInput.disabled      = false;
+            this.$PasswordCheckInput.disabled = false;
+        },
+
+        /**
+         * Disable the element for authentication data input
+         */
+        disable: function () {
+            this.$PasswordInput.disabled      = true;
+            this.$PasswordCheckInput.disabled = true;
+        },
+
+        /**
+         * Return authentication information
          *
          * @return {string}
          */
-        getOldAuthData: function () {
-            return this.$InputOriginal.value;
-        },
-
-        /**
-         * Return new authentication information
-         *
-         * @return {string}
-         */
-        getNewAuthData: function () {
-            return this.$InputNew.value;
+        getAuthData: function () {
+            return this.$PasswordInput.value.trim();
         }
     });
 });
