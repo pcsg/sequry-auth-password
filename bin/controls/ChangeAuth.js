@@ -8,7 +8,7 @@
  */
 define('package/sequry/auth-password/bin/controls/ChangeAuth', [
 
-    'package/pcsg/grouppasswordmanager/bin/controls/authPlugins/ChangeAuth',
+    'package/sequry/core/bin/controls/authPlugins/ChangeAuth',
 
     'Locale',
     'Mustache',
