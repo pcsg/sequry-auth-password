@@ -4,10 +4,6 @@
  * @module package/sequry/auth-password/bin/controls/Registration
  * @author www.pcsg.de (Patrick Müller)
  *
- * @require qui/controls/Control
- * @require Locale
- * @require css!package/sequry/auth-password/bin/controls/Registration.css
- *
  * @event onSubmit
  */
 define('package/sequry/auth-password/bin/controls/Registration', [

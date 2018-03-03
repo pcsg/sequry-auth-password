@@ -4,15 +4,11 @@
  * @module package/sequry/auth-password/bin/controls/Authentication
  * @author www.pcsg.de (Patrick Müller)
  *
- * @require package/pcsg/grouppasswordmanager/bin/controls/authPlugins/Authentication
- * @require Locale
- * @require css!package/sequry/auth-password/bin/controls/Authentication.css
- *
  * @event onSubmit
  */
 define('package/sequry/auth-password/bin/controls/Authentication', [
 
-    'package/pcsg/grouppasswordmanager/bin/controls/authPlugins/Authentication',
+    'package/sequry/core/bin/controls/authPlugins/Authentication',
     'Locale',
 
     'css!package/sequry/auth-password/bin/controls/Authentication.css'

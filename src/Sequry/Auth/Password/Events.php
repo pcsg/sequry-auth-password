@@ -52,7 +52,6 @@ class Events
             return;
         }
 
-        // 1. fetch auth plugin id from quiqqer/grouppasswordmanager
         $result = $result = QUI::getDataBase()->fetch(array(
             'select' => array(
                 'id'

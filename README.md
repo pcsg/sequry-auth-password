@@ -1,3 +1,3 @@
 Authentification Plugin via Password
 
-requires module: pcsg/grouppasswordmanager
+requires module: sequry/core
