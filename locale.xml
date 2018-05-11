@@ -14,7 +14,7 @@
             <de><![CDATA[Der Benutzer muss sich zuerst bei diesem Plugin registrieren, um sich authentifizieren zu können.]]></de>
         </locale>
         <locale name="exception.registration.with.quiqqer.password.only">
-            <de><![CDATA[Die Registrierung bei diesem Authentifizierungs-Faktor ist nur mit dem QUIQQER Login-Passwort möglich.]]></de>
+            <de><![CDATA[Die Registrierung bei diesem Authentifizierungs-Faktor ist nur mit dem Login-Passwort möglich.]]></de>
         </locale>
         <locale name="exception.user.authentication.data.wrong">
             <de><![CDATA[Die Zugangsdaten sind nicht korrekt.]]></de>
@@ -31,7 +31,7 @@
 
         <!-- Class: Events -->
         <locale name="exception.set.password.only.via.plugin" html="true">
-            <de><![CDATA[Das Passwort des Benutzers <b>[userName]</b> (#[userId]) kann nicht über die Standard QUIQQER-Benutzerverwaltung geändert werden, da das Modul <b>gpmauthpassword</b> installiert ist und der Benutzer für dieses Plugin registriert ist. Das Passwort kann ausschließlich über das Authentifizierungs-Interface des Passwort-Managers geändert werden.]]></de>
+            <de><![CDATA[Das Passwort des Benutzers <b>[userName]</b> (#[userId]) kann nicht über die Standard-Benutzerverwaltung geändert werden, da das Modul <b>sequry/auth-password</b> installiert ist und der Benutzer für dieses Plugin registriert ist. Das Passwort kann ausschließlich über die Authentifizierungs-Verwaltung von <b>Sequry</b> geändert werden.]]></de>
         </locale>
         <locale name="exception.event.userchangepassword">
             <de><![CDATA[Das Passwort des Benutzers [userName] (#[userId]) konnte nicht geändert werden, da das Modul "sequry/auth-password" einen unerwarteten Fehler geworfen hat. Bitte wenden Sie sich an einen Administrator.]]></de>
@@ -44,11 +44,18 @@
 
     <groups name="sequry/auth-password" datatype="php,js">
 
+        <locale name="package.title">
+            <de><![CDATA[Sequry-Authentifizierung mit Login-Passwort]]></de>
+        </locale>
+        <locale name="package.description">
+            <de><![CDATA[Authentifizierung für verschlüsselte Daten in Sequry mittels Login-Passwort.]]></de>
+        </locale>
+
         <locale name="plugin.name">
-            <de><![CDATA[QUIQQER Login-Passwort]]></de>
+            <de><![CDATA[Login-Passwort]]></de>
         </locale>
         <locale name="plugin.description">
-            <de><![CDATA[Authentifizierung mit dem QUIQQER Login-Passwort]]></de>
+            <de><![CDATA[Authentifizierung mit dem Login-Passwort]]></de>
         </locale>
 
     </groups>
@@ -57,12 +64,12 @@
 
         <!-- Control: Authentication -->
         <locale name="authentication.password.label">
-            <de><![CDATA[QUIQQER Login Passwort]]></de>
+            <de><![CDATA[Login Passwort]]></de>
         </locale>
 
         <!-- Control: ChangeAuth -->
         <locale name="controls.changeauth.template.labelPassword">
-            <de><![CDATA[Neues QUIQQER Login-Passwort]]></de>
+            <de><![CDATA[Neues Login-Passwort]]></de>
         </locale>
         <locale name="controls.changeauth.template.labelPasswordCheck">
             <de><![CDATA[Passwort wiederholen]]></de>

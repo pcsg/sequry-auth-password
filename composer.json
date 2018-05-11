@@ -1,8 +1,9 @@
 {
   "name": "sequry/auth-password",
   "type": "quiqqer-plugin",
-  "description": "Sequry authentication with QUIQQER login password",
+  "description": "Sequry authentication with login password",
   "version": "dev-master",
+  "license": "GPL-3.0+",
   "authors": [
     {
       "name": "Patrick Müller",
@@ -19,7 +20,7 @@
   },
   "autoload": {
     "psr-0": {
-      "Sequry\\Auth\\": "src/Sequry/"
+      "Sequry\\Auth\\": "src/Sequry/Auth/"
     }
   }
 }
