@@ -17,7 +17,7 @@ Features
 
 Installation
 ------------
-The Package Name is: sequry/core
+The Package Name is: sequry/auth-secondpassword
 
 Usage
 -----
