@@ -44,6 +44,13 @@
 
     <groups name="sequry/auth-password" datatype="php,js">
 
+        <locale name="package.title">
+            <de><![CDATA[Sequry-Authentifizierung mit Login-Passwort]]></de>
+        </locale>
+        <locale name="package.description">
+            <de><![CDATA[Authentifizierung für verschlüsselte Daten in Sequry mittels Login-Passwort.]]></de>
+        </locale>
+
         <locale name="plugin.name">
             <de><![CDATA[Login-Passwort]]></de>
         </locale>
