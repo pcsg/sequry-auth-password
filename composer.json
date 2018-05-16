@@ -19,7 +19,7 @@
     "sequry/core": ">=1.0|dev-master|dev-dev"
   },
   "autoload": {
-    "psr-0": {
+    "psr-4": {
       "Sequry\\Auth\\": "src/Sequry/Auth/"
     }
   }
