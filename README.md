@@ -1,6 +1,6 @@
-![Sequry Authentication - Password](bin/images/Readme.jpg)
+![Sequry Authentication - Password](bin/images/Readme.png)
 
-Sequry
+Sequry - Login Password Authentication
 ========
 
 Authentication module for Sequry password manager. Authenticate with your Sequry Login password. This is the default authentication module for Sequry.
