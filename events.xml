@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <events>
 
-    <event on="onPcsgGpmLoadAuthPlugins" fire="\Sequry\Auth\Password\AuthPlugin::registerPlugin" />
-    <event on="onUserSetPassword" fire="\Sequry\Auth\Password\Events::onUserSetPassword" />
-    <event on="onUserChangePasswordBefore" fire="\Sequry\Auth\Password\Events::onUserChangePasswordBefore" />
+    <event on="onSequryLoadAuthPlugins" fire="\Sequry\Auth\Password\AuthPlugin::registerPlugin"/>
+    <event on="onUserSetPassword" fire="\Sequry\Auth\Password\Events::onUserSetPassword"/>
+    <event on="onUserChangePasswordBefore" fire="\Sequry\Auth\Password\Events::onUserChangePasswordBefore"/>
 
 </events>
