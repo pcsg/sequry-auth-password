@@ -10,11 +10,11 @@
             <locale group="sequry/auth-password" var="package.description"/>
         </description>
 
-        <!--<image src="URL_OPT_DIR/quiqqer/frontend-users/bin/images/Logo.jpg"/>-->
+        <image src="URL_OPT_DIR/sequry/auth-password/bin/images/Logo.png"/>
 
-        <!--<preview>-->
-            <!---->
-        <!--</preview>-->
+        <preview>
+            <image src="URL_OPT_DIR/sequry/auth-password/bin/images/preview/Backend_Auth.png"/>
+        </preview>
 
         <support>
             <email><![CDATA[support@pcsg.de]]></email>

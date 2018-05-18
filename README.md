@@ -1,6 +1,6 @@
-![Sequry Authentication - Password](bin/images/Readme.jpg)
+![Sequry Authentication - Password](bin/images/Readme.png)
 
-Sequry
+Sequry - Login Password Authentication
 ========
 
 Authentication module for Sequry password manager. Authenticate with your Sequry Login password. This is the default authentication module for Sequry.
@@ -17,7 +17,7 @@ Features
 
 Installation
 ------------
-The Package Name is: sequry/auth-secondpassword
+The Package Name is: sequry/auth-password
 
 Usage
 -----
@@ -27,9 +27,9 @@ Do not forget to add this authentication module to your Security Classes.
 
 Contribute
 ----------
-- Project: https://dev.quiqqer.com/sequry/core
-- Issue Tracker: https://dev.quiqqer.com/sequry/core/issues
-- Source Code: https://dev.quiqqer.com/sequry/core/tree/master
+- Project: https://dev.quiqqer.com/sequry/auth-password
+- Issue Tracker: https://dev.quiqqer.com/sequry/auth-password/issues
+- Source Code: https://dev.quiqqer.com/sequry/auth-password/tree/master
 
 Support
 -------
