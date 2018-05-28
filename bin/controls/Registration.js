@@ -8,19 +8,22 @@
  */
 define('package/sequry/auth-password/bin/controls/Registration', [
 
-    'qui/controls/Control',
-    'Locale',
+    'package/sequry/core/bin/controls/authPlugins/Registration',
 
+    'Locale',
+    'Mustache',
+
+    'text!package/sequry/auth-password/bin/controls/Registration.html',
     'css!package/sequry/auth-password/bin/controls/Registration.css'
 
-], function (QUIControl, QUILocale) {
+], function (RegistrationBaseClass, QUILocale, Mustache, template) {
     "use strict";
 
     var lg = 'sequry/auth-password';
 
     return new Class({
 
-        Extends: QUIControl,
+        Extends: RegistrationBaseClass,
         Type   : 'package/sequry/auth-password/bin/controls/Registration',
 
         Binds: [
@@ -31,7 +34,7 @@ define('package/sequry/auth-password/bin/controls/Registration', [
         initialize: function (options) {
             this.parent(options);
 
-            this.$Categories = null;
+            this.$PasswordInput = null;
 
             this.addEvents({
                 onInject: this.$onInject
@@ -39,34 +42,22 @@ define('package/sequry/auth-password/bin/controls/Registration', [
         },
 
         /**
-         * create the domnode element
-         *
-         * @return {HTMLDivElement}
-         */
-        create: function () {
-            this.$Elm = this.parent();
-
-            this.$Elm.set(
-                'html',
-                '<label>' +
-                '<span class="gpm-auth-password-title">' +
-                QUILocale.get(lg, 'authentication.password.label') +
-                '</span>' +
-                '<input type="password" class="gpm-auth-password-input"/>' +
-                '</label>'
-            );
-
-            return this.$Elm;
-        },
-
-        /**
          * event : on inject
          */
         $onInject: function () {
-            var self  = this;
-            var Input = this.$Elm.getElement('.gpm-auth-password-input');
+            var self     = this;
+            var lgPrefix = 'controls.Registration.template.';
 
-            Input.addEvents({
+            var Content = new Element('div', {
+                'class': 'sequry-auth-password-registration',
+                html   : Mustache.render(template, {
+                    labelPassword: QUILocale.get(lg, lgPrefix + 'labelPassword')
+                })
+            }).inject(this.$Elm);
+
+            this.$PasswordInput = Content.getElement('input.sequry-auth-password-registration-input');
+
+            this.$PasswordInput.addEvents({
                 keydown: function (event) {
                     if (typeof event !== 'undefined' &&
                         event.code === 13) {
@@ -74,8 +65,13 @@ define('package/sequry/auth-password/bin/controls/Registration', [
                     }
                 }
             });
+        },
 
-            Input.focus();
+        /**
+         * Focus the element for authentication data input
+         */
+        focus: function () {
+            this.$PasswordInput.focus();
         },
 
         /**
@@ -83,8 +79,8 @@ define('package/sequry/auth-password/bin/controls/Registration', [
          *
          * @return {string}
          */
-        getRegistrationData: function () {
-            return this.$Elm.getElement('.gpm-auth-password-input').value;
+        getAuthData: function () {
+            return this.$PasswordInput.value;
         }
     });
 });

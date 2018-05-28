@@ -56,15 +56,15 @@ define('package/sequry/auth-password/bin/controls/ChangeAuth', [
             var lgPrefix = 'controls.changeauth.template.';
 
             var Content = new Element('div', {
-                'class': 'pcsg-gpm-auth-password-change',
+                'class': 'sequry-auth-password-change',
                 html   : Mustache.render(template, {
                     labelPassword     : QUILocale.get(lg, lgPrefix + 'labelPassword'),
                     labelPasswordCheck: QUILocale.get(lg, lgPrefix + 'labelPasswordCheck')
                 })
             }).inject(this.$Elm);
 
-            this.$PasswordInput      = Content.getElement('.pcsg-gpm-auth-password-change-input');
-            this.$PasswordCheckInput = Content.getElement('.pcsg-gpm-auth-password-change-input-check');
+            this.$PasswordInput      = Content.getElement('.sequry-auth-password-change-input');
+            this.$PasswordCheckInput = Content.getElement('.sequry-auth-password-change-input-check');
 
             var OnKeyDown = function (event) {
                 if (typeof event !== 'undefined' &&
@@ -81,7 +81,7 @@ define('package/sequry/auth-password/bin/controls/ChangeAuth', [
                 keydown: OnKeyDown
             });
 
-            this.$MsgElm = Content.getElement('.pcsg-gpm-auth-password-change-msg');
+            this.$MsgElm = Content.getElement('.sequry-auth-password-change-msg');
         },
 
         /**

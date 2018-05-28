@@ -64,7 +64,7 @@
 
         <!-- Control: Authentication -->
         <locale name="authentication.password.label">
-            <de><![CDATA[Login Passwort]]></de>
+            <de><![CDATA[Login-Passwort]]></de>
         </locale>
 
         <!-- Control: ChangeAuth -->
@@ -76,6 +76,11 @@
         </locale>
         <locale name="controls.changeauth.password_mismatch">
             <de><![CDATA[Die Passwörter stimmen nicht überein.]]></de>
+        </locale>
+
+        <!-- Control: Registration -->
+        <locale name="controls.Registration.template.labelPassword">
+            <de><![CDATA[Sequry Login-Passwort]]></de>
         </locale>
 
     </groups>
