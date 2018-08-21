@@ -28,6 +28,9 @@
         <locale name="exception.change.auth.new.information.empty">
             <de><![CDATA[Die neuen Zugangsdaten sind leer.]]></de>
         </locale>
+        <locale name="exception.change.auth.new_information_too_short">
+            <de><![CDATA[Das neue Zugangspasswort muss mindestens [minLength] Zeichen enthalten.]]></de>
+        </locale>
 
         <!-- Class: Events -->
         <locale name="exception.set.password.only.via.plugin" html="true">
