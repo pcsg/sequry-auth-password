@@ -28,6 +28,9 @@
         <locale name="exception.change.auth.new.information.empty">
             <de><![CDATA[Die neuen Zugangsdaten sind leer.]]></de>
         </locale>
+        <locale name="exception.change.auth.new_information_too_short">
+            <de><![CDATA[Das neue Zugangspasswort muss mindestens [minLength] Zeichen enthalten.]]></de>
+        </locale>
 
         <!-- Class: Events -->
         <locale name="exception.set.password.only.via.plugin" html="true">
@@ -64,7 +67,7 @@
 
         <!-- Control: Authentication -->
         <locale name="authentication.password.label">
-            <de><![CDATA[Login Passwort]]></de>
+            <de><![CDATA[Login-Passwort]]></de>
         </locale>
 
         <!-- Control: ChangeAuth -->
@@ -76,6 +79,11 @@
         </locale>
         <locale name="controls.changeauth.password_mismatch">
             <de><![CDATA[Die Passwörter stimmen nicht überein.]]></de>
+        </locale>
+
+        <!-- Control: Registration -->
+        <locale name="controls.Registration.template.labelPassword">
+            <de><![CDATA[Sequry Login-Passwort]]></de>
         </locale>
 
     </groups>

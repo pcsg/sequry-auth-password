@@ -8,17 +8,18 @@
     float: left;
 }
 
-.pcsg-gpm-auth-password-change-inputs label {
+.sequry-auth-password-change-inputs label {
     clear: both;
     float: left;
     width: 300px !important;
 }
 
-.pcsg-gpm-auth-password-change-inputs label:first-of-type {
+.sequry-auth-password-change-inputs label:first-of-type {
     margin-bottom: 10px;
 }
 
-.pcsg-gpm-auth-password-change-msg {
+.sequry-auth-password-change-msg {
+    display: none;
     float: left;
     margin-top: 10px;
     width: 100%;

@@ -19,7 +19,8 @@ use Sequry\Core\Security\HiddenString;
  */
 class AuthPlugin implements IAuthPlugin
 {
-    const TBL = 'pcsg_gpm_auth_password';
+    const TBL                 = 'pcsg_gpm_auth_password';
+    const PASSWORD_MIN_LENGTH = 5;
 
     /**
      * Flag for user password change
@@ -41,7 +42,7 @@ class AuthPlugin implements IAuthPlugin
      *
      * @var HiddenString[]
      */
-    protected static $authInformation = array();
+    protected static $authInformation = [];
 
     /**
      * Return locale data for auth plugin name
@@ -50,10 +51,10 @@ class AuthPlugin implements IAuthPlugin
      */
     public static function getNameLocaleData()
     {
-        return array(
+        return [
             'sequry/auth-password',
             'plugin.name'
-        );
+        ];
     }
 
     /**
@@ -63,10 +64,10 @@ class AuthPlugin implements IAuthPlugin
      */
     public static function getDescriptionLocaleData()
     {
-        return array(
+        return [
             'sequry/auth-password',
             'plugin.description'
-        );
+        ];
     }
 
     /**
@@ -94,18 +95,18 @@ class AuthPlugin implements IAuthPlugin
 
         if (!self::isRegistered($User)) {
             // @todo eigenen 401 error code
-            throw new QUI\Exception(array(
+            throw new QUI\Exception([
                 'sequry/auth-password',
                 'exception.user.not.registered'
-            ));
+            ]);
         }
 
         if (!self::checkQuiqqerPassword($User, $information)) {
             // @todo eigenen 401 error code
-            throw new QUI\Exception(array(
+            throw new QUI\Exception([
                 'sequry/auth-password',
                 'exception.user.authentication.data.wrong'
-            ));
+            ]);
         }
 
         self::$authInformation[$User->getId()] = $information;
@@ -142,10 +143,10 @@ class AuthPlugin implements IAuthPlugin
         }
 
         if (!self::isAuthenticated($User)) {
-            throw new QUI\Exception(array(
+            throw new QUI\Exception([
                 'sequry/auth-password',
                 'exception.derive.key.user.not.authenticated'
-            ));
+            ]);
         }
 
         return KDF::createKey(
@@ -181,10 +182,10 @@ class AuthPlugin implements IAuthPlugin
         }
 
         if (!self::isRegistered($User)) {
-            throw new QUI\Exception(array(
+            throw new QUI\Exception([
                 'sequry/auth-password',
                 'exception.change.auth.user.not.registered'
-            ));
+            ]);
         }
 
         if (self::$changePasswordEvent) {
@@ -194,20 +195,30 @@ class AuthPlugin implements IAuthPlugin
 
         // check old authentication information
         if (!self::checkQuiqqerPassword($User, $old)) {
-            throw new QUI\Exception(array(
+            throw new QUI\Exception([
                 'sequry/auth-password',
                 'exception.change.auth.old.information.wrong'
-            ));
+            ]);
         }
 
         // check new authentication information
         $new = new HiddenString(trim($new));
 
         if (empty($new)) {
-            throw new QUI\Exception(array(
+            throw new QUI\Exception([
                 'sequry/auth-password',
                 'exception.change.auth.new.information.empty'
-            ));
+            ]);
+        }
+
+        if (mb_strlen($new) < self::PASSWORD_MIN_LENGTH) {
+            throw new QUI\Exception([
+                'sequry/auth-password',
+                'exception.change.auth.new_information_too_short',
+                [
+                    'minLength' => self::PASSWORD_MIN_LENGTH
+                ]
+            ]);
         }
 
         // set new user password
@@ -230,13 +241,13 @@ class AuthPlugin implements IAuthPlugin
             $User = QUI::getUserBySession();
         }
 
-        $result = QUI::getDataBase()->fetch(array(
-            'select' => array('salt'),
+        $result = QUI::getDataBase()->fetch([
+            'select' => ['salt'],
             'from'   => self::TBL,
-            'where'  => array(
+            'where'  => [
                 'userId' => $User->getId()
-            )
-        ));
+            ]
+        ]);
 
         // @todo ggf. abfragen ob existent
         $salt = $result[0]['salt'];
@@ -260,27 +271,27 @@ class AuthPlugin implements IAuthPlugin
         }
 
         if (self::isRegistered($User)) {
-            throw new QUI\Exception(array(
+            throw new QUI\Exception([
                 'sequry/auth-password',
                 'exception.user.already.registered'
-            ));
+            ]);
         }
 
         if (!self::checkQuiqqerPassword($User, $information)) {
-            throw new QUI\Exception(array(
+            throw new QUI\Exception([
                 'sequry/auth-password',
                 'exception.registration.with.quiqqer.password.only'
-            ));
+            ]);
         }
 
         $randSalt = Random::getRandomData();
 
         QUI::getDataBase()->insert(
             self::TBL,
-            array(
+            [
                 'userId' => $User->getId(),
                 'salt'   => $randSalt
-            )
+            ]
         );
 
         return $information;
@@ -298,13 +309,13 @@ class AuthPlugin implements IAuthPlugin
             $User = QUI::getUserBySession();
         }
 
-        $result = QUI::getDataBase()->fetch(array(
+        $result = QUI::getDataBase()->fetch([
             'count' => 1,
             'from'  => self::TBL,
-            'where' => array(
+            'where' => [
                 'userId' => $User->getId()
-            )
-        ));
+            ]
+        ]);
 
         if (current(current($result)) == 0) {
             return false;
@@ -320,14 +331,14 @@ class AuthPlugin implements IAuthPlugin
      */
     public static function getRegisteredUserIds()
     {
-        $userIds = array();
+        $userIds = [];
 
-        $result = QUI::getDataBase()->fetch(array(
-            'select' => array(
+        $result = QUI::getDataBase()->fetch([
+            'select' => [
                 'userId'
-            ),
+            ],
             'from'   => self::TBL
-        ));
+        ]);
 
         foreach ($result as $row) {
             $userIds[] = $row['userId'];
@@ -376,9 +387,9 @@ class AuthPlugin implements IAuthPlugin
     {
         QUI::getDataBase()->delete(
             self::TBL,
-            array(
+            [
                 'userId' => $CryptoUser->getId()
-            )
+            ]
         );
     }
 

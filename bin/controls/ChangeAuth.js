@@ -4,7 +4,7 @@
  * @module package/sequry/auth-password/bin/controls/ChangeAuth
  * @author www.pcsg.de (Patrick Müller)
  *
- * @event onSubmit [authData, this]
+ * @event onSubmit [this]
  */
 define('package/sequry/auth-password/bin/controls/ChangeAuth', [
 
@@ -28,7 +28,8 @@ define('package/sequry/auth-password/bin/controls/ChangeAuth', [
 
         Binds: [
             '$onInject',
-            '$check',
+            'checkNewAuthData',
+            'checkOldAuthData',
             'getAuthData',
             'submit',
             'focus',
@@ -56,20 +57,20 @@ define('package/sequry/auth-password/bin/controls/ChangeAuth', [
             var lgPrefix = 'controls.changeauth.template.';
 
             var Content = new Element('div', {
-                'class': 'pcsg-gpm-auth-password-change',
+                'class': 'sequry-auth-password-change',
                 html   : Mustache.render(template, {
                     labelPassword     : QUILocale.get(lg, lgPrefix + 'labelPassword'),
                     labelPasswordCheck: QUILocale.get(lg, lgPrefix + 'labelPasswordCheck')
                 })
             }).inject(this.$Elm);
 
-            this.$PasswordInput      = Content.getElement('.pcsg-gpm-auth-password-change-input');
-            this.$PasswordCheckInput = Content.getElement('.pcsg-gpm-auth-password-change-input-check');
+            this.$PasswordInput      = Content.getElement('.sequry-auth-password-change-input');
+            this.$PasswordCheckInput = Content.getElement('.sequry-auth-password-change-input-check');
 
             var OnKeyDown = function (event) {
                 if (typeof event !== 'undefined' &&
                     event.code === 13) {
-                    self.submit();
+                    self.fireEvent('submit', [self]);
                 }
             };
 
@@ -81,40 +82,7 @@ define('package/sequry/auth-password/bin/controls/ChangeAuth', [
                 keydown: OnKeyDown
             });
 
-            this.$MsgElm = Content.getElement('.pcsg-gpm-auth-password-change-msg');
-        },
-
-        /**
-         * Submit data
-         */
-        submit: function () {
-            if (this.$check()) {
-                this.fireEvent('submit', [this.getAuthData(), this]);
-            }
-        },
-
-        /**
-         * Check if passwords are equal
-         *
-         * @returns {boolean}
-         */
-        $check: function () {
-            var pass      = this.$PasswordInput.value.trim();
-            var passCheck = this.$PasswordCheckInput.value.trim();
-
-            if (pass === passCheck) {
-                return true;
-            }
-
-            this.$MsgElm.set(
-                'html',
-                QUILocale.get(
-                    lg,
-                    'controls.changeauth.password_mismatch'
-                )
-            );
-
-            return false;
+            this.$MsgElm = Content.getElement('.sequry-auth-password-change-msg');
         },
 
         /**
@@ -138,6 +106,32 @@ define('package/sequry/auth-password/bin/controls/ChangeAuth', [
         disable: function () {
             this.$PasswordInput.disabled      = true;
             this.$PasswordCheckInput.disabled = true;
+        },
+
+        /**
+         * Checks if the new authentication information input is correct
+         *
+         * @return {boolean} - Correctness of information
+         */
+        checkAuthData: function () {
+            var pass      = this.$PasswordInput.value.trim();
+            var passCheck = this.$PasswordCheckInput.value.trim();
+
+            if (pass === passCheck) {
+                return true;
+            }
+
+            this.$MsgElm.set(
+                'html',
+                QUILocale.get(
+                    lg,
+                    'controls.changeauth.password_mismatch'
+                )
+            );
+
+            this.$MsgElm.setStyle('display', 'block');
+
+            return false;
         },
 
         /**
